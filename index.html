@@ -155,9 +155,8 @@ footer{text-align:center;color:#71829a;font-size:11px;line-height:1.6;margin-top
         <select id="pieceMinutes" aria-label="Minutes"></select>
       </div>
     </div>
-    <div class="stats">
+    <div class="stats" style="grid-template-columns:1fr">
       <div class="stat"><small data-i18n="piecesRequiredLabel">Потрібно виготовити</small><strong id="piecesRequired">—</strong></div>
-      <div class="stat"><small data-i18n="piecesDurationLabel">Вибраний час</small><strong id="piecesTime">—</strong></div>
     </div>
     <p id="piecesMessage" class="section-sub" style="margin-top:13px"></p>
   </section>
@@ -318,12 +317,19 @@ function fillTimeSelects(reset=false){
 ["elapsedHours","elapsedMinutes"].forEach(id=>$(id).addEventListener("change",calc));
 
 function calcPieces(){
-  const rate=number("rate"),h=Number($("pieceHours").value),m=Number($("pieceMinutes").value),duration=h+m/60;
-  if(!Number.isFinite(rate)||rate<=0||duration<=0){
-    $("piecesRequired").textContent="—";$("piecesTime").textContent="—";$("piecesMessage").textContent=t("piecesHint");return;
+  const rate=number("rate");
+  const h=Number($("pieceHours").value);
+  const m=Number($("pieceMinutes").value);
+  const totalMinutes=h*60+m;
+
+  if(!Number.isFinite(rate)||rate<=0||totalMinutes<=0){
+    $("piecesRequired").textContent="—";
+    $("piecesMessage").textContent=t("piecesHint");
+    return;
   }
+
+  const duration=totalMinutes/60;
   $("piecesRequired").textContent=fmt(Math.ceil(rate*duration))+" "+t("units");
-  $("piecesTime").textContent=fmt(duration)+" "+t("hours");
   $("piecesMessage").textContent=t("piecesHint");
 }
 ["pieceHours","pieceMinutes"].forEach(id=>$(id).addEventListener("change",calcPieces));
