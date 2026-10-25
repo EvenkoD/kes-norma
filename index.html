@@ -1,8 +1,8 @@
+
 <!doctype html>
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<link rel="manifest" href="./manifest.json">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#101827">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -10,54 +10,138 @@
 <meta name="apple-mobile-web-app-title" content="KES Norma">
 <title>KES Norma</title>
 <style>
-:root{color-scheme:dark;--bg:#080d18;--panel:#111a2b;--muted:#91a2bd;--text:#f4f7fc;--line:#263650;--blue:#78aaff;--green:#42d6a0;--yellow:#ffc76b;--red:#ff7c96}
-*{box-sizing:border-box}
-html{min-height:100%;background:var(--bg)}
-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 10% 0%,#1b3152 0%,transparent 42%),linear-gradient(160deg,#0b1322,#080d18 65%);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:22px 15px calc(36px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
-main{max-width:560px;margin:0 auto}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:26px}
-.eyebrow{color:var(--blue);font-size:10px;font-weight:850;letter-spacing:1.6px;line-height:1.5}
-h1{font-size:clamp(28px,7vw,35px);letter-spacing:-1.2px;margin:0 0 8px}
-.sub{color:var(--muted);font-size:14px;line-height:1.55;margin:0 0 23px}
-.panel,.result{background:linear-gradient(145deg,#141f33,#101827);border:1px solid var(--line);border-radius:22px;padding:19px;margin-bottom:15px;box-shadow:0 12px 35px #00000012}
-label{display:block;font-size:12px;color:#b9c8df;margin:0 0 8px;font-weight:700;line-height:1.5}
-input,select{width:100%;min-width:0;font:inherit;font-size:16px;color:var(--text);background:#0a1220;border:1px solid #2d3e59;border-radius:13px;padding:14px 13px;outline:none}
-input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #78aaff20}
-input::placeholder{color:#63748f}
-select{width:auto;max-width:155px;padding:10px 9px;font-size:13px}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px}
-.field{min-width:0}.full{grid-column:1/-1}
-.result{background:linear-gradient(145deg,#172a43,#111d30);border-color:#304967;padding:21px}
-.result.good{background:linear-gradient(145deg,#10352f,#10241f);border-color:#236c59}
-.result.mid{background:linear-gradient(145deg,#382d1b,#211e19);border-color:#745a2c}
-.result.low{background:linear-gradient(145deg,#351f2b,#211722);border-color:#754050}
-.result-label{font-size:13px;color:#c1d0e5;font-weight:750}
-.percent{font-size:clamp(48px,13vw,62px);font-weight:850;letter-spacing:-2.5px;line-height:1.15;margin:9px 0 17px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.track{height:9px;background:#ffffff15;border-radius:30px;overflow:hidden}
-.bar{height:100%;width:0;background:var(--blue);border-radius:inherit;transition:width .25s ease}
-.good .bar{background:var(--green)}.mid .bar{background:var(--yellow)}.low .bar{background:var(--red)}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
-.stat{background:#07101d55;border:1px solid #ffffff09;border-radius:15px;padding:14px;min-width:0}
-.stat small{display:block;color:#a9bad2;font-size:11px;line-height:1.5;margin-bottom:7px}
-.stat strong{display:block;font-size:clamp(17px,4vw,21px);font-weight:800;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
-.buttons{display:flex;gap:10px;margin-top:17px}
-button{font:inherit;font-size:13px;font-weight:800;border:1px solid transparent;border-radius:13px;padding:13px 14px;min-height:46px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-button:active{transform:scale(.98);filter:brightness(.94)}
-.primary{background:linear-gradient(135deg,#8bb7ff,#6197f2);color:#081427;flex:1}
-.secondary{background:#202e44;color:#e5edfa;border-color:#30415c}
-.danger{background:#3a202b;color:#ffcbd5;border-color:#603140}
-.section-title{font-size:18px;letter-spacing:-.3px;margin:0 0 6px}
-.section-sub{font-size:12px;color:var(--muted);line-height:1.6;margin:0 0 14px}
-.average{font-size:32px;font-weight:850;letter-spacing:-1px;margin:4px 0 15px}
-.history-item{border-top:1px solid var(--line);padding:15px 2px;display:flex;align-items:center;gap:10px;justify-content:space-between}
-.hist-main{min-width:0}.hist-date{font-weight:750;font-size:14px}
-.hist-meta{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5}
-.hist-percent{font-size:19px;font-weight:850;white-space:nowrap}
-.empty{color:var(--muted);font-size:14px;padding:13px 0}
-footer{text-align:center;color:#71829a;font-size:11px;line-height:1.6;margin-top:23px}
-@media(min-width:500px){body{padding-top:30px}.panel,.result{padding:22px}}
-@media(max-width:360px){body{padding:15px 11px calc(28px + env(safe-area-inset-bottom))}.fields{grid-template-columns:1fr}.full{grid-column:auto}.buttons{flex-direction:column}.percent{font-size:48px}select{max-width:135px}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important}}
+:root {
+  color-scheme: dark;
+  --bg:#080d18;
+  --panel:#111a2b;
+  --muted:#91a2bd;
+  --text:#f4f7fc;
+  --line:#263650;
+  --blue:#78aaff;
+  --green:#42d6a0;
+  --yellow:#ffc76b;
+  --red:#ff7c96;
+}
+* { box-sizing:border-box; }
+html { min-height:100%; background:var(--bg); scroll-behavior:smooth; }
+body {
+  margin:0;
+  min-height:100vh;
+  background:radial-gradient(ellipse at 10% 0%,#1b3152 0%,transparent 42%),linear-gradient(160deg,#0b1322,#080d18 65%);
+  color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  padding:22px 15px calc(36px + env(safe-area-inset-bottom));
+  -webkit-font-smoothing:antialiased;
+}
+main { max-width:560px; margin:0 auto; }
+.top {
+  display:flex; justify-content:space-between; align-items:center;
+  gap:12px; margin-bottom:26px; padding-left:50px;
+}
+.eyebrow { color:var(--blue); font-size:10px; font-weight:850; letter-spacing:1.6px; line-height:1.5; }
+h1 { font-size:clamp(28px,7vw,35px); letter-spacing:-1.2px; margin:0 0 8px; }
+.sub { color:var(--muted); font-size:14px; line-height:1.55; margin:0 0 23px; }
+.panel,.result {
+  background:linear-gradient(145deg,#141f33,#101827);
+  border:1px solid var(--line); border-radius:22px;
+  padding:19px; margin-bottom:15px; box-shadow:0 12px 35px #00000012;
+}
+label { display:block; font-size:12px; color:#b9c8df; margin:0 0 8px; font-weight:700; line-height:1.5; }
+input,select {
+  width:100%; min-width:0; font:inherit; font-size:16px;
+  color:var(--text); background:#0a1220;
+  border:1px solid #2d3e59; border-radius:13px;
+  padding:14px 13px; outline:none;
+}
+input:focus,select:focus { border-color:var(--blue); box-shadow:0 0 0 3px #78aaff20; }
+input::placeholder { color:#63748f; }
+select { width:auto; max-width:155px; padding:10px 9px; font-size:13px; }
+.fields { display:grid; grid-template-columns:1fr 1fr; gap:16px 12px; }
+.field { min-width:0; }
+.full { grid-column:1/-1; }
+.result {
+  background:linear-gradient(145deg,#172a43,#111d30);
+  border-color:#304967; padding:21px;
+}
+.result.good { background:linear-gradient(145deg,#10352f,#10241f); border-color:#236c59; }
+.result.mid { background:linear-gradient(145deg,#382d1b,#211e19); border-color:#745a2c; }
+.result.low { background:linear-gradient(145deg,#351f2b,#211722); border-color:#754050; }
+.result-label { font-size:13px; color:#c1d0e5; font-weight:750; }
+.percent { font-size:clamp(48px,13vw,62px); font-weight:850; letter-spacing:-2.5px; line-height:1.15; margin:9px 0 17px; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+.track { height:9px; background:#ffffff15; border-radius:30px; overflow:hidden; }
+.bar { height:100%; width:0; background:var(--blue); border-radius:inherit; transition:width .25s ease; }
+.good .bar { background:var(--green); }
+.mid .bar { background:var(--yellow); }
+.low .bar { background:var(--red); }
+.stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:17px; }
+.stat { background:#07101d55; border:1px solid #ffffff09; border-radius:15px; padding:14px; min-width:0; }
+.stat small { display:block; color:#a9bad2; font-size:11px; line-height:1.5; margin-bottom:7px; }
+.stat strong { display:block; font-size:clamp(17px,4vw,21px); font-weight:800; overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
+.buttons { display:flex; gap:10px; margin-top:17px; }
+button { font:inherit; font-size:13px; font-weight:800; border:1px solid transparent; border-radius:13px; padding:13px 14px; min-height:46px; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+button:active { transform:scale(.98); filter:brightness(.94); }
+.menu-button {
+  font-size:22px; line-height:1; padding:10px 12px;
+  background:#202e44; color:#e5edfa; border:1px solid #30415c; min-width:44px;
+}
+#openMenu {
+  position:fixed;
+  top:calc(env(safe-area-inset-top, 0px) + 12px);
+  left:12px;
+  z-index:1001;
+  box-shadow:0 4px 16px #0005;
+  isolation:isolate;
+}
+.drawer-backdrop {
+  position:fixed; inset:0; background:#0009;
+  z-index:1000; display:none;
+}
+.drawer-backdrop.open { display:block; }
+.drawer {
+  position:absolute; top:0; left:0; bottom:0;
+  width:min(82vw,310px); overflow-y:auto;
+  background:#101827; border-right:1px solid var(--line);
+  padding:calc(24px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom));
+  box-shadow:15px 0 40px #0005;
+}
+.drawer h2 { font-size:19px; margin:0 0 18px; }
+.drawer a {
+  display:block; padding:14px 12px; margin:5px 0;
+  border-radius:12px; background:#18243a;
+  color:var(--text); text-decoration:none;
+  font-size:14px; font-weight:700;
+}
+.time-selects { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.time-selects select { width:100%; max-width:none; padding:13px; font-size:15px; }
+.anchor-section { scroll-margin-top:20px; }
+.primary { background:linear-gradient(135deg,#8bb7ff,#6197f2); color:#081427; flex:1; }
+.secondary { background:#202e44; color:#e5edfa; border-color:#30415c; }
+.danger { background:#3a202b; color:#ffcbd5; border-color:#603140; }
+.section-title { font-size:18px; letter-spacing:-.3px; margin:0 0 6px; }
+.section-sub { font-size:12px; color:var(--muted); line-height:1.6; margin:0 0 14px; }
+.average { font-size:32px; font-weight:850; letter-spacing:-1px; margin:4px 0 15px; }
+.history-item { border-top:1px solid var(--line); padding:15px 2px; display:flex; align-items:center; gap:10px; justify-content:space-between; }
+.hist-main { min-width:0; }
+.hist-date { font-weight:750; font-size:14px; }
+.hist-meta { font-size:12px; color:var(--muted); margin-top:5px; line-height:1.5; }
+.hist-percent { font-size:19px; font-weight:850; white-space:nowrap; }
+.empty { color:var(--muted); font-size:14px; padding:13px 0; }
+footer { text-align:center; color:#71829a; font-size:11px; line-height:1.6; margin-top:23px; }
+@media(min-width:500px) {
+  body { padding-top:30px; }
+  .panel,.result { padding:22px; }
+}
+@media(max-width:360px) {
+  body { padding:15px 11px calc(28px + env(safe-area-inset-bottom)); }
+  .fields { grid-template-columns:1fr; }
+  .full { grid-column:auto; }
+  .buttons { flex-direction:column; }
+  .percent { font-size:48px; }
+  select { max-width:135px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { transition-duration:.01ms!important; scroll-behavior:auto; }
+}
 </style>
 </head>
 <body>
@@ -71,10 +155,22 @@ footer{text-align:center;color:#71829a;font-size:11px;line-height:1.6;margin-top
     </select>
   </div>
 
+  <button class="menu-button" id="openMenu" aria-label="Open menu" aria-expanded="false">☰</button>
+  <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true">
+    <nav class="drawer" aria-label="Main menu">
+      <h2>KES Norma</h2>
+      <a href="#calculator" data-i18n="menuCalc">Калькулятор норми</a>
+      <a href="#forecastPanel" data-i18n="menuForecast">Прогноз зміни</a>
+      <a href="#piecesPanel" data-i18n="menuPieces">Деталі за час</a>
+      <a href="#historyPanel" data-i18n="menuHistory">Історія змін</a>
+      <a href="#export" data-i18n="menuExport">Експорт CSV</a>
+    </nav>
+  </div>
+
   <h1 data-i18n="title">KES Norma</h1>
   <p class="sub" data-i18n="subtitle">Швидкий розрахунок виконання норми.</p>
 
-  <section class="panel">
+  <section class="panel anchor-section" id="calculator">
     <div class="fields">
       <div class="field">
         <label for="rate" data-i18n="rateLabel">Норма за годину (шт.)</label>
@@ -107,12 +203,15 @@ footer{text-align:center;color:#71829a;font-size:11px;line-height:1.6;margin-top
     </div>
   </section>
 
-  <section class="panel" id="forecastPanel">
+  <section class="panel anchor-section" id="forecastPanel">
     <h2 class="section-title" data-i18n="forecastTitle">Прогноз кінця зміни</h2>
-    <p class="section-sub" data-i18n="forecastDesc">Вкажи, скільки годин уже відпрацював, щоб оцінити темп і результат до кінця зміни.</p>
+    <p class="section-sub" data-i18n="forecastDesc">Вкажи, скільки часу вже відпрацював.</p>
     <div class="field">
-      <label for="elapsed" data-i18n="elapsedLabel">Відпрацьовано годин</label>
-      <input id="elapsed" type="number" min="0" max="24" step="0.25" inputmode="decimal" placeholder="Наприклад, 3,5" value="0">
+      <label data-i18n="elapsedLabel">Відпрацьований час</label>
+      <div class="time-selects">
+        <select id="elapsedHours" aria-label="Hours"></select>
+        <select id="elapsedMinutes" aria-label="Minutes"></select>
+      </div>
     </div>
     <div class="stats">
       <div class="stat"><small data-i18n="paceLabel">Поточний темп</small><strong id="pace">—</strong></div>
@@ -120,190 +219,489 @@ footer{text-align:center;color:#71829a;font-size:11px;line-height:1.6;margin-top
       <div class="stat"><small data-i18n="neededLabel">Потрібно за годину відтепер</small><strong id="needed">—</strong></div>
       <div class="stat"><small data-i18n="forecastPercentLabel">Прогноз виконання</small><strong id="forecastPercent">—%</strong></div>
     </div>
-    <p id="forecastMessage" class="section-sub" style="margin:13px 0 0" data-i18n="forecastHint">Введи норму, кількість виробів і відпрацьований час.</p>
+    <p id="forecastMessage" class="section-sub" style="margin:13px 0 0"></p>
   </section>
 
-  <section class="panel">
+  <section class="panel anchor-section" id="piecesPanel">
+    <h2 class="section-title" data-i18n="piecesTitle">Деталі за час</h2>
+    <p class="section-sub" data-i18n="piecesDesc">Розрахуй, скільки деталей потрібно виготовити за вибраний час.</p>
+    <div class="field">
+      <label data-i18n="piecesTimeLabel">Час</label>
+      <div class="time-selects">
+        <select id="pieceHours" aria-label="Hours"></select>
+        <select id="pieceMinutes" aria-label="Minutes"></select>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><small data-i18n="piecesRequiredLabel">Потрібно виготовити</small><strong id="piecesRequired">—</strong></div>
+      <div class="stat"><small data-i18n="piecesDurationLabel">Вибраний час</small><strong id="piecesTime">—</strong></div>
+    </div>
+    <p id="piecesMessage" class="section-sub" style="margin-top:13px"></p>
+  </section>
+
+  <section class="panel anchor-section" id="historyPanel">
     <h2 class="section-title" data-i18n="historyTitle">Історія змін</h2>
-    <p class="section-sub" data-i18n="historyDesc">Історія зберігається на цьому пристрої та доступна офлайн.</p>
+    <p class="section-sub" data-i18n="historyDesc">Дані зберігаються на цьому пристрої.</p>
     <div class="section-sub" data-i18n="averageLabel">Середнє виконання норми</div>
-    <div id="average" class="average">—%</div>
-    <div id="history"></div>
+    <div class="average" id="average">—%</div>
+    <div id="history"><div class="empty">Немає збережених змін.</div></div>
     <div class="buttons">
-      <button class="secondary" id="export" data-i18n="export">Експорт CSV</button>
+      <button class="primary" id="export" data-i18n="export">Експорт CSV</button>
       <button class="danger" id="deleteHistory" data-i18n="deleteHistory">Видалити історію</button>
     </div>
   </section>
+
   <footer data-i18n="footer">Історія змін зберігається лише на цьому пристрої.</footer>
 </main>
 
 <script>
-"use strict";
 const $ = id => document.getElementById(id);
+
 const translations = {
- uk:{
-  eyebrow:"РОЗРАХУНОК ПРОДУКТИВНОСТІ",title:"KES Norma",subtitle:"Швидкий розрахунок виконання норми.",
-  rateLabel:"Норма за годину (шт.)",madeLabel:"Виготовлено за зміну (шт.)",hoursLabel:"Тривалість зміни (години)",
-  defaultHours:"Тривалість зміни за замовчуванням: 7,5 год.",completion:"Виконання норми",targetLabel:"План на зміну",
-  leftLabel:"Залишилося до 100%",enterValues:"Введи норму за годину та кількість виготовлених виробів.",
-  save:"Зберегти зміну",clear:"Очистити поля",historyTitle:"Історія змін",
-  historyDesc:"Історія зберігається на цьому пристрої та доступна офлайн.",averageLabel:"Середнє виконання норми",
-  export:"Експорт CSV",deleteHistory:"Видалити історію",footer:"Історія змін зберігається лише на цьому пристрої.",
-  over:"Понад норму",remaining:"Залишилося до 100%",complete:"Норму виконано! Чудова робота!",
-  short:"До плану не вистачає",invalid:"Введи правильну норму, кількість виробів і тривалість зміни.",
-  saved:"Зміну збережено ✓",alertInvalid:"Спочатку введи правильні значення.",
-  empty:"Збережених змін поки немає.",made:"Виготовлено",plan:"план",hours:"год",
-  confirmDelete:"Видалити всю історію змін? Цю дію неможливо скасувати.",
-  emptyExport:"Історія поки порожня.",date:"Дата",rate:"Норма за годину",qty:"Виготовлено",shiftHours:"Години",percent:"Відсоток",
-  ratePlaceholder:"Наприклад, 100",madePlaceholder:"Наприклад, 820",units:"шт.",
-   forecastTitle:"Прогноз кінця зміни",forecastDesc:"Вкажи, скільки годин уже відпрацював, щоб оцінити темп і результат до кінця зміни.",elapsedLabel:"Відпрацьовано годин",paceLabel:"Поточний темп",forecastLabel:"Прогноз на кінець зміни",neededLabel:"Потрібно за годину відтепер",forecastPercentLabel:"Прогноз виконання",forecastHint:"Введи норму, кількість виробів і відпрацьований час.",forecastDone:"Зміна вже завершена за вказаним часом.",forecastOnTrack:"За поточним темпом план буде виконано.",forecastBelow:"За поточним темпом плану може не вистачити."
- },
- cs:{
-  eyebrow:"VÝPOČET PRODUKTIVITY",title:"KES Norma",subtitle:"Rychlý výpočet plnění normy.",
-  rateLabel:"Norma za hodinu (ks)",madeLabel:"Vyrobeno za směnu (ks)",hoursLabel:"Délka směny (hodiny)",
-  defaultHours:"Výchozí délka směny: 7,5 h.",completion:"Plnění normy",targetLabel:"Plán na směnu",
-  leftLabel:"Zbývá do 100 %",enterValues:"Zadej hodinovou normu a počet vyrobených kusů.",
-  save:"Uložit směnu",clear:"Vymazat pole",historyTitle:"Historie směn",
-  historyDesc:"Historie se ukládá v tomto zařízení a funguje offline.",averageLabel:"Průměrné plnění normy",
-  export:"Export CSV",deleteHistory:"Smazat historii",footer:"Historie směn se ukládá pouze v tomto zařízení.",
-  over:"Nad normu",remaining:"Zbývá do 100 %",complete:"Norma splněna! Skvělá práce!",
-  short:"Do plánu chybí",invalid:"Zadej platnou normu, počet kusů a délku směny.",
-  saved:"Směna uložena ✓",alertInvalid:"Nejprve zadej správné hodnoty.",
-  empty:"Zatím nejsou uloženy žádné směny.",made:"Vyrobeno",plan:"plán",hours:"h",
-  confirmDelete:"Smazat celou historii směn? Tuto akci nelze vrátit.",
-  emptyExport:"Historie je zatím prázdná.",date:"Datum",rate:"Norma za hodinu",qty:"Vyrobeno",shiftHours:"Hodiny",percent:"Procento",
-  ratePlaceholder:"Například 100",madePlaceholder:"Například 820",units:"ks",
-   forecastTitle:"Prognóza konce směny",forecastDesc:"Zadej, kolik hodin už máš odpracováno, a odhadni tempo i výsledek na konci směny.",elapsedLabel:"Odpracované hodiny",paceLabel:"Aktuální tempo",forecastLabel:"Odhad na konec směny",neededLabel:"Potřebný výkon za hodinu",forecastPercentLabel:"Odhad plnění",forecastHint:"Zadej normu, počet kusů a odpracovaný čas.",forecastDone:"Podle zadaného času už směna skončila.",forecastOnTrack:"Při současném tempu bude plán splněn.",forecastBelow:"Při současném tempu může plán chybět."
- },
- pl:{
-  eyebrow:"OBLICZANIE WYDAJNOŚCI",title:"KES Norma",subtitle:"Szybkie obliczanie realizacji normy.",
-  rateLabel:"Norma na godzinę (szt.)",madeLabel:"Wyprodukowano na zmianie (szt.)",hoursLabel:"Długość zmiany (godziny)",
-  defaultHours:"Domyślna długość zmiany: 7,5 godz.",completion:"Realizacja normy",targetLabel:"Plan na zmianę",
-  leftLabel:"Pozostało do 100%",enterValues:"Wpisz normę godzinową i liczbę wyprodukowanych sztuk.",
-  save:"Zapisz zmianę",clear:"Wyczyść pola",historyTitle:"Historia zmian",
-  historyDesc:"Historia jest zapisywana na tym urządzeniu i działa offline.",averageLabel:"Średnia realizacja normy",
-  export:"Eksport CSV",deleteHistory:"Usuń historię",footer:"Historia zmian jest przechowywana tylko na tym urządzeniu.",
-  over:"Powyżej normy",remaining:"Pozostało do 100%",complete:"Norma wykonana! Świetna robota!",
-  short:"Do planu brakuje",invalid:"Wpisz poprawną normę, liczbę sztuk i czas zmiany.",
-  saved:"Zmiana zapisana ✓",alertInvalid:"Najpierw wpisz prawidłowe wartości.",
-  empty:"Brak zapisanych zmian.",made:"Wyprodukowano",plan:"plan",hours:"godz.",
+uk: {
+  eyebrow:"РОЗРАХУНОК ПРОДУКТИВНОСТІ",
+  title:"KES Norma",
+  subtitle:"Швидкий розрахунок виконання норми.",
+  rateLabel:"Норма за годину (шт.)",
+  madeLabel:"Виготовлено за зміну (шт.)",
+  hoursLabel:"Тривалість зміни (години)",
+  defaultHours:"Тривалість зміни за замовчуванням: 7,5 год.",
+  completion:"Виконання норми",
+  targetLabel:"План на зміну",
+  leftLabel:"Залишилося до 100%",
+  enterValues:"Введи норму за годину та кількість виготовлених виробів.",
+  save:"Зберегти зміну",
+  clear:"Очистити поля",
+  menuCalc:"Калькулятор норми",
+  menuForecast:"Прогноз зміни",
+  menuPieces:"Деталі за час",
+  menuHistory:"Історія змін",
+  menuExport:"Експорт CSV",
+  forecastTitle:"Прогноз кінця зміни",
+  forecastDesc:"Вкажи, скільки часу вже відпрацював.",
+  elapsedLabel:"Відпрацьований час",
+  paceLabel:"Поточний темп",
+  forecastLabel:"Прогноз на кінець зміни",
+  neededLabel:"Потрібно за годину відтепер",
+  forecastPercentLabel:"Прогноз виконання",
+  forecastHint:"Введи норму, кількість деталей і відпрацьований час.",
+  forecastDone:"За вказаним часом зміна вже завершилася.",
+  forecastOnTrack:"За поточного темпу план буде виконано.",
+  forecastBelow:"За поточного темпу може не вистачити до плану.",
+  piecesTitle:"Деталі за час",
+  piecesDesc:"Розрахуй кількість деталей для вибраного проміжку часу.",
+  piecesTimeLabel:"Час",
+  piecesRequiredLabel:"Потрібно виготовити",
+  piecesDurationLabel:"Вибраний час",
+  piecesHint:"Введи норму за годину, щоб розрахувати кількість деталей.",
+  historyTitle:"Історія змін",
+  historyDesc:"Історія зберігається на цьому пристрої.",
+  averageLabel:"Середнє виконання норми",
+  export:"Експорт CSV",
+  deleteHistory:"Видалити історію",
+  footer:"Історія змін зберігається лише на цьому пристрої.",
+  over:"Вище норми",
+  remaining:"Залишилося до 100%",
+  complete:"Норму виконано! Чудова робота!",
+  short:"До плану не вистачає",
+  invalid:"Введи коректну норму, кількість деталей і тривалість зміни.",
+  saved:"Зміну збережено ✓",
+  alertInvalid:"Спочатку введи коректні значення.",
+  empty:"Немає збережених змін.",
+  made:"Виготовлено",
+  plan:"план",
+  hours:"год.",
+  units:"шт.",
+  confirmDelete:"Видалити всю історію змін? Цю дію не можна скасувати.",
+  emptyExport:"Історія порожня.",
+  date:"Дата",
+  rate:"Норма за годину",
+  qty:"Виготовлено",
+  shiftHours:"Години зміни",
+  percent:"Відсоток",
+  ratePlaceholder:"Наприклад, 100",
+  madePlaceholder:"Наприклад, 820"
+},
+cs: {
+  eyebrow:"VÝPOČET PRODUKTIVITY",
+  title:"KES Norma",
+  subtitle:"Rychlý výpočet plnění normy.",
+  rateLabel:"Norma za hodinu (ks)",
+  madeLabel:"Vyrobeno za směnu (ks)",
+  hoursLabel:"Délka směny (hodiny)",
+  defaultHours:"Výchozí délka směny: 7,5 hod.",
+  completion:"Plnění normy",
+  targetLabel:"Plán na směnu",
+  leftLabel:"Zbývá do 100 %",
+  enterValues:"Zadej hodinovou normu a počet vyrobených kusů.",
+  save:"Uložit směnu",
+  clear:"Vymazat pole",
+  menuCalc:"Kalkulačka normy",
+  menuForecast:"Prognóza směny",
+  menuPieces:"Kusy za čas",
+  menuHistory:"Historie směn",
+  menuExport:"Export CSV",
+  forecastTitle:"Prognóza konce směny",
+  forecastDesc:"Zadej, kolik času už máš odpracováno.",
+  elapsedLabel:"Odpracovaný čas",
+  paceLabel:"Aktuální tempo",
+  forecastLabel:"Prognóza na konec směny",
+  neededLabel:"Potřebný výkon za hodinu",
+  forecastPercentLabel:"Předpokládané plnění",
+  forecastHint:"Zadej normu, počet kusů a odpracovaný čas.",
+  forecastDone:"Podle zadaného času už směna skončila.",
+  forecastOnTrack:"Při současném tempu bude plán splněn.",
+  forecastBelow:"Při současném tempu může část plánu chybět.",
+  piecesTitle:"Kusy za čas",
+  piecesDesc:"Vypočítej počet kusů pro zvolený časový úsek.",
+  piecesTimeLabel:"Čas",
+  piecesRequiredLabel:"Potřebný počet kusů",
+  piecesDurationLabel:"Zvolený čas",
+  piecesHint:"Zadej hodinovou normu pro výpočet kusů.",
+  historyTitle:"Historie směn",
+  historyDesc:"Historie se ukládá v tomto zařízení.",
+  averageLabel:"Průměrné plnění normy",
+  export:"Export CSV",
+  deleteHistory:"Smazat historii",
+  footer:"Historie směn je uložena pouze v tomto zařízení.",
+  over:"Nad normou",
+  remaining:"Zbývá do 100 %",
+  complete:"Norma splněna! Skvělá práce!",
+  short:"Do plánu chybí",
+  invalid:"Zadej platnou normu, počet kusů a délku směny.",
+  saved:"Směna uložena ✓",
+  alertInvalid:"Nejprve zadej platné hodnoty.",
+  empty:"Žádné uložené směny.",
+  made:"Vyrobeno",
+  plan:"plán",
+  hours:"hod.",
+  units:"ks",
+  confirmDelete:"Opravdu smazat celou historii směn?",
+  emptyExport:"Historie je prázdná.",
+  date:"Datum",
+  rate:"Norma za hodinu",
+  qty:"Vyrobeno",
+  shiftHours:"Hodiny směny",
+  percent:"Procento",
+  ratePlaceholder:"Například 100",
+  madePlaceholder:"Například 820"
+},
+pl: {
+  eyebrow:"OBLICZANIE WYDAJNOŚCI",
+  title:"KES Norma",
+  subtitle:"Szybkie obliczanie realizacji normy.",
+  rateLabel:"Norma na godzinę (szt.)",
+  madeLabel:"Wyprodukowano na zmianie (szt.)",
+  hoursLabel:"Długość zmiany (godziny)",
+  defaultHours:"Domyślna długość zmiany: 7,5 godz.",
+  completion:"Realizacja normy",
+  targetLabel:"Plan na zmianę",
+  leftLabel:"Pozostało do 100%",
+  enterValues:"Wpisz normę godzinową i liczbę wyprodukowanych sztuk.",
+  save:"Zapisz zmianę",
+  clear:"Wyczyść pola",
+  menuCalc:"Kalkulator normy",
+  menuForecast:"Prognoza zmiany",
+  menuPieces:"Sztuki w czasie",
+  menuHistory:"Historia zmian",
+  menuExport:"Eksport CSV",
+  forecastTitle:"Prognoza końca zmiany",
+  forecastDesc:"Wpisz, ile czasu już przepracowałeś.",
+  elapsedLabel:"Przepracowany czas",
+  paceLabel:"Aktualne tempo",
+  forecastLabel:"Prognoza na koniec zmiany",
+  neededLabel:"Wymagana liczba na godzinę",
+  forecastPercentLabel:"Prognozowana realizacja",
+  forecastHint:"Wpisz normę, liczbę sztuk i przepracowany czas.",
+  forecastDone:"Według podanego czasu zmiana już się zakończyła.",
+  forecastOnTrack:"Przy obecnym tempie plan zostanie wykonany.",
+  forecastBelow:"Przy obecnym tempie może zabraknąć do planu.",
+  piecesTitle:"Sztuki w czasie",
+  piecesDesc:"Oblicz liczbę sztuk dla wybranego przedziału czasu.",
+  piecesTimeLabel:"Czas",
+  piecesRequiredLabel:"Wymagana liczba sztuk",
+  piecesDurationLabel:"Wybrany czas",
+  piecesHint:"Wpisz normę na godzinę, aby obliczyć liczbę sztuk.",
+  historyTitle:"Historia zmian",
+  historyDesc:"Historia jest zapisywana na tym urządzeniu.",
+  averageLabel:"Średnia realizacja normy",
+  export:"Eksport CSV",
+  deleteHistory:"Usuń historię",
+  footer:"Historia zmian jest przechowywana tylko na tym urządzeniu.",
+  over:"Powyżej normy",
+  remaining:"Pozostało do 100%",
+  complete:"Norma wykonana! Świetna robota!",
+  short:"Do planu brakuje",
+  invalid:"Wpisz poprawną normę, liczbę sztuk i czas zmiany.",
+  saved:"Zmiana zapisana ✓",
+  alertInvalid:"Najpierw wpisz prawidłowe wartości.",
+  empty:"Brak zapisanych zmian.",
+  made:"Wyprodukowano",
+  plan:"plan",
+  hours:"godz.",
+  units:"szt.",
   confirmDelete:"Usunąć całą historię zmian? Tej operacji nie można cofnąć.",
-  emptyExport:"Historia jest pusta.",date:"Data",rate:"Norma na godzinę",qty:"Wyprodukowano",shiftHours:"Godziny",percent:"Procent",
-  ratePlaceholder:"Na przykład 100",madePlaceholder:"Na przykład 820",units:"szt.",
-   forecastTitle:"Prognoza końca zmiany",forecastDesc:"Wpisz, ile godzin już przepracowano, aby oszacować tempo i wynik na koniec zmiany.",elapsedLabel:"Przepracowane godziny",paceLabel:"Aktualne tempo",forecastLabel:"Prognoza na koniec zmiany",neededLabel:"Wymagana liczba na godzinę",forecastPercentLabel:"Prognozowana realizacja",forecastHint:"Wpisz normę, liczbę sztuk i przepracowany czas.",forecastDone:"Według podanego czasu zmiana już się zakończyła.",forecastOnTrack:"Przy obecnym tempie plan zostanie wykonany.",forecastBelow:"Przy obecnym tempie może zabraknąć do planu."
- }
+  emptyExport:"Historia jest pusta.",
+  date:"Data",
+  rate:"Norma na godzinę",
+  qty:"Wyprodukowano",
+  shiftHours:"Godziny",
+  percent:"Procent",
+  ratePlaceholder:"Na przykład 100",
+  madePlaceholder:"Na przykład 820"
+}
 };
-let lang = localStorage.getItem("normaLanguage") || "uk";
-if (!["uk","cs","pl"].includes(lang)) lang = "uk";
-const t = key => translations[lang][key] || translations.uk[key];
-const locale = () => lang==="uk" ? "uk-UA" : lang==="cs" ? "cs-CZ" : "pl-PL";
-const fmt = n => Number(n).toLocaleString(locale(),{maximumFractionDigits:2});
+
+let lang=localStorage.getItem("normaLanguage")||"uk";
+if(!["uk","cs","pl"].includes(lang)) lang="uk";
+const t=key=>translations[lang][key]||translations.uk[key];
+const locale=()=>lang==="uk"?"uk-UA":lang==="cs"?"cs-CZ":"pl-PL";
+const fmt=n=>Number(n).toLocaleString(locale(),{maximumFractionDigits:2});
 
 function applyLanguage(){
- document.documentElement.lang=lang;
- $("language").value=lang;
- document.querySelectorAll("[data-i18n]").forEach(el=>{
-  const key=el.dataset.i18n;
-  if(t(key)) el.textContent=t(key);
- });
- $("rate").placeholder=t("ratePlaceholder");
- $("made").placeholder=t("madePlaceholder");
- calc();
- renderHistory();
+  document.documentElement.lang=lang;
+  $("language").value=lang;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key=el.dataset.i18n;
+    if(t(key)) el.textContent=t(key);
+  });
+  $("rate").placeholder=t("ratePlaceholder");
+  $("made").placeholder=t("madePlaceholder");
+  fillTimeSelects(false);
+  calc();
+  renderHistory();
+  calcPieces();
 }
+
 $("language").addEventListener("change",()=>{
- lang=$("language").value;
- localStorage.setItem("normaLanguage",lang);
- applyLanguage();
+  lang=$("language").value;
+  localStorage.setItem("normaLanguage",lang);
+  applyLanguage();
 });
 
-const number = id => {
- const raw=$(id).value.trim().replace(",",".");
- return raw===""?NaN:Number(raw);
+const number=id=>{
+  const raw=$(id).value.trim().replace(",",".");
+  return raw===""?NaN:Number(raw);
 };
+
 function calc(){
- const rate=number("rate"),made=number("made"),hours=number("hours");
- const valid=Number.isFinite(rate)&&rate>0&&Number.isFinite(made)&&made>=0&&Number.isFinite(hours)&&hours>0&&hours<=24;
- const box=$("result");
- if(!valid){
-  $("percent").textContent="—%";$("target").textContent="—";$("left").textContent="—";
-  $("message").textContent=t("enterValues");$("bar").style.width="0%";box.className="result low";
-  $("leftLabel").textContent=t("leftLabel");
-  return null;
- }
- const target=rate*hours,pct=made/target*100,remaining=Math.max(0,Math.ceil(target-made));
- $("percent").textContent=fmt(pct)+"%";$("target").textContent=fmt(target);
- $("leftLabel").textContent=made>=target?t("over"):t("remaining");
- $("left").textContent=made>=target?"+"+fmt(made-target):fmt(remaining);
- $("bar").style.width=Math.min(pct,100)+"%";
- box.className="result "+(pct>=100?"good":pct>=80?"mid":"low");
- $("message").textContent=pct>=100?t("complete"):t("short")+" "+fmt(remaining)+" "+t("units")+".";
- const elapsedRaw=number("elapsed");
- const elapsedValid=Number.isFinite(elapsedRaw)&&elapsedRaw>=0&&elapsedRaw<=hours;
- if(!elapsedValid){$("pace").textContent="—";$("forecast").textContent="—";$("needed").textContent="—";$("forecastPercent").textContent="—%";$("forecastMessage").textContent=t("forecastHint");}
- else if(elapsedRaw===0){$("pace").textContent="—";$("forecast").textContent="—";$("needed").textContent="—";$("forecastPercent").textContent="—%";$("forecastMessage").textContent=t("forecastHint");}
- else {
-  const pace=made/elapsedRaw, forecast=pace*hours, forecastPct=forecast/target*100, remainingHours=Math.max(0,hours-elapsedRaw), needed=remainingHours>0?Math.max(0,target-made)/remainingHours:NaN;
-  $("pace").textContent=fmt(pace)+" "+t("units")+"/"+t("hours");
-  $("forecast").textContent=fmt(forecast)+" "+t("units");
-  $("needed").textContent=Number.isFinite(needed)?fmt(needed)+" "+t("units")+"/"+t("hours"):"—";
-  $("forecastPercent").textContent=fmt(forecastPct)+"%";
-  $("forecastMessage").textContent=remainingHours===0?t("forecastDone"):(forecastPct>=100?t("forecastOnTrack"):t("forecastBelow"));
- }
- return {rate,made,hours,target,pct};
+  const rate=number("rate"),made=number("made"),hours=number("hours");
+  const valid=Number.isFinite(rate)&&rate>0&&Number.isFinite(made)&&made>=0&&Number.isFinite(hours)&&hours>0&&hours<=24;
+  const box=$("result");
+
+  if(!valid){
+    $("percent").textContent="—%";
+    $("target").textContent="—";
+    $("left").textContent="—";
+    $("message").textContent=t("enterValues");
+    $("bar").style.width="0%";
+    box.className="result low";
+    $("leftLabel").textContent=t("leftLabel");
+    resetForecast();
+    return null;
+  }
+
+  const target=rate*hours;
+  const pct=made/target*100;
+  const remaining=Math.max(0,Math.ceil(target-made));
+
+  $("percent").textContent=fmt(pct)+"%";
+  $("target").textContent=fmt(target);
+  $("leftLabel").textContent=made>=target?t("over"):t("remaining");
+  $("left").textContent=made>=target?"+"+fmt(made-target):fmt(remaining);
+  $("bar").style.width=Math.min(pct,100)+"%";
+  box.className="result "+(pct>=100?"good":pct>=80?"mid":"low");
+  $("message").textContent=pct>=100?t("complete"):t("short")+" "+fmt(remaining)+" "+t("units")+".";
+
+  const elapsed=Number($("elapsedHours").value)+Number($("elapsedMinutes").value)/60;
+
+  if(elapsed<=0){
+    resetForecast();
+  } else if(elapsed>hours){
+    resetForecast();
+    $("forecastMessage").textContent=t("invalid");
+  } else {
+    const pace=made/elapsed;
+    const forecast=pace*hours;
+    const forecastPct=forecast/target*100;
+    const remainingHours=hours-elapsed;
+    const needed=remainingHours>0?Math.max(0,target-made)/remainingHours:NaN;
+
+    $("pace").textContent=fmt(pace)+" "+t("units")+"/"+t("hours");
+    $("forecast").textContent=fmt(forecast)+" "+t("units");
+    $("needed").textContent=Number.isFinite(needed)?fmt(needed)+" "+t("units")+"/"+t("hours"):"—";
+    $("forecastPercent").textContent=fmt(forecastPct)+"%";
+    $("forecastMessage").textContent=remainingHours===0?t("forecastDone"):(forecastPct>=100?t("forecastOnTrack"):t("forecastBelow"));
+  }
+  return {rate,made,hours,target,pct};
 }
-["rate","made","hours","elapsed"].forEach(id=>$(id).addEventListener("input",calc));
+
+function resetForecast(){
+  $("pace").textContent="—";
+  $("forecast").textContent="—";
+  $("needed").textContent="—";
+  $("forecastPercent").textContent="—%";
+  $("forecastMessage").textContent=t("forecastHint");
+}
+
+["rate","made","hours"].forEach(id=>$(id).addEventListener("input",()=>{
+  calc();
+  calcPieces();
+}));
+
 $("clear").addEventListener("click",()=>{
- $("rate").value="";$("made").value="";$("hours").value="7.5";$("elapsed").value="0";calc();$("rate").focus();
+  $("rate").value="";
+  $("made").value="";
+  $("hours").value="7.5";
+  $("elapsedHours").value="0";
+  $("elapsedMinutes").value="0";
+  $("pieceHours").value="1";
+  $("pieceMinutes").value="0";
+  calc();
+  calcPieces();
+  $("rate").focus();
 });
 
 function getHistory(){
- try{
-  const data=JSON.parse(localStorage.getItem("normaHistoryV2")||"[]");
-  return Array.isArray(data)?data.filter(x=>x&&Number.isFinite(Number(x.pct))):[];
- }catch(e){return []}
+  try{
+    const data=JSON.parse(localStorage.getItem("normaHistoryV2")||"[]");
+    return Array.isArray(data)?data.filter(x=>x&&Number.isFinite(Number(x.pct))):[];
+  }catch(e){return [];}
 }
-function setHistory(items){localStorage.setItem("normaHistoryV2",JSON.stringify(items))}
+function setHistory(items){
+  localStorage.setItem("normaHistoryV2",JSON.stringify(items));
+}
 function dateLabel(iso){
- const d=new Date(iso);
- return Number.isNaN(d.getTime()) ? String(iso||"") : d.toLocaleString(locale(),{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
+  const d=new Date(iso);
+  return Number.isNaN(d.getTime())?String(iso||""):d.toLocaleString(locale(),{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
 }
 function renderHistory(){
- const items=getHistory();
- $("average").textContent=items.length?fmt(items.reduce((s,x)=>s+Number(x.pct),0)/items.length)+"%":"—%";
- if(!items.length){$("history").innerHTML='<div class="empty">'+t("empty")+"</div>";return}
- $("history").innerHTML=items.slice().reverse().map(x=>{
-  const pct=Number(x.pct);
-  const color=pct>=100?"#34d399":pct>=80?"#fbbf24":"#fb7185";
-  return '<div class="history-item"><div class="hist-main"><div class="hist-date">'+dateLabel(x.date)+'</div><div class="hist-meta">'+t("made")+" "+fmt(x.made)+" / "+t("plan")+" "+fmt(x.target)+" "+t("units")+" · "+fmt(x.hours)+" "+t("hours")+'</div></div><div class="hist-percent" style="color:'+color+'">'+fmt(pct)+'%</div></div>';
- }).join("");
+  const items=getHistory();
+  $("average").textContent=items.length?fmt(items.reduce((s,x)=>s+Number(x.pct),0)/items.length)+"%":"—%";
+  if(!items.length){
+    $("history").innerHTML='<div class="empty">'+t("empty")+"</div>";
+    return;
+  }
+  $("history").innerHTML=items.slice().reverse().map(x=>{
+    const pct=Number(x.pct);
+    const color=pct>=100?"#34d399":pct>=80?"#fbbf24":"#fb7185";
+    return '<div class="history-item"><div class="hist-main"><div class="hist-date">'+dateLabel(x.date)+'</div><div class="hist-meta">'+t("made")+" "+fmt(x.made)+" / "+t("plan")+" "+fmt(x.target)+" "+t("units")+" · "+fmt(x.hours)+" "+t("hours")+'</div></div><div class="hist-percent" style="color:'+color+'">'+fmt(pct)+'%</div></div>';
+  }).join("");
 }
+
 $("save").addEventListener("click",()=>{
- const c=calc();
- if(!c){alert(t("alertInvalid"));return}
- const items=getHistory();
- items.push({...c,date:new Date().toISOString()});
- setHistory(items);renderHistory();
- const btn=$("save");
- btn.textContent=t("saved");
- window.setTimeout(()=>{btn.textContent=t("save")},1300);
+  const c=calc();
+  if(!c){alert(t("alertInvalid"));return;}
+  const items=getHistory();
+  items.push({...c,date:new Date().toISOString()});
+  setHistory(items);
+  renderHistory();
+  const btn=$("save");
+  btn.textContent=t("saved");
+  window.setTimeout(()=>btn.textContent=t("save"),1300);
 });
+
 $("deleteHistory").addEventListener("click",()=>{
- if(getHistory().length&&confirm(t("confirmDelete"))){setHistory([]);renderHistory()}
+  if(getHistory().length&&confirm(t("confirmDelete"))){
+    setHistory([]);
+    renderHistory();
+  }
 });
+
 $("export").addEventListener("click",()=>{
- const items=getHistory();
- if(!items.length){alert(t("emptyExport"));return}
- const rows=[[t("date"),t("rate"),t("qty"),t("shiftHours"),t("plan"),t("percent")]];
- items.forEach(x=>rows.push([dateLabel(x.date),x.rate,x.made,x.hours,x.target,Number(x.pct).toFixed(2)]));
- const csv="\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(";")).join("\r\n");
- const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
- const url=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=url;a.download="KES_Norma_history.csv";document.body.appendChild(a);a.click();a.remove();
- window.setTimeout(()=>URL.revokeObjectURL(url),1000);
+  const items=getHistory();
+  if(!items.length){alert(t("emptyExport"));return;}
+  const rows=[[t("date"),t("rate"),t("qty"),t("shiftHours"),t("plan"),t("percent")]];
+  items.forEach(x=>rows.push([dateLabel(x.date),x.rate,x.made,x.hours,x.target,Number(x.pct).toFixed(2)]));
+  const csv="\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(";")).join("\r\n");
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download="KES_Norma_history.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  window.setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
+
+function fillTimeSelects(reset=true){
+  const hourLabel=lang==="uk"?"год":lang==="cs"?"h":"godz.";
+  const minuteLabel=lang==="uk"?"хв":"min";
+  const hourOptions=Array.from({length:25},(_,i)=>`<option value="${i}">${i} ${hourLabel}</option>`).join("");
+  const minuteOptions=Array.from({length:12},(_,i)=>{
+    const m=i*5;
+    return `<option value="${m}">${String(m).padStart(2,"0")} ${minuteLabel}</option>`;
+  }).join("");
+
+  ["elapsedHours","pieceHours"].forEach(id=>{
+    const el=$(id),old=el.value;
+    el.innerHTML=hourOptions;
+    el.value=reset?(id==="pieceHours"?"1":"0"):(old||"0");
+  });
+  ["elapsedMinutes","pieceMinutes"].forEach(id=>{
+    const el=$(id),old=el.value;
+    el.innerHTML=minuteOptions;
+    el.value=reset?"0":(old||"0");
+  });
+}
+
+function syncElapsed(){
+  calc();
+}
+["elapsedHours","elapsedMinutes"].forEach(id=>$(id).addEventListener("change",syncElapsed));
+
+function calcPieces(){
+  const rate=number("rate");
+  const h=Number($("pieceHours").value);
+  const m=Number($("pieceMinutes").value);
+  const duration=h+m/60;
+
+  if(!Number.isFinite(rate)||rate<=0||duration<=0){
+    $("piecesRequired").textContent="—";
+    $("piecesTime").textContent="—";
+    $("piecesMessage").textContent=t("piecesHint");
+    return;
+  }
+  $("piecesRequired").textContent=fmt(Math.ceil(rate*duration))+" "+t("units");
+  $("piecesTime").textContent=fmt(duration)+" "+t("hours");
+  $("piecesMessage").textContent=t("piecesHint");
+}
+["pieceHours","pieceMinutes"].forEach(id=>$(id).addEventListener("change",calcPieces));
+
+const backdrop=$("drawerBackdrop");
+function closeMenu(){
+  backdrop.classList.remove("open");
+  backdrop.setAttribute("aria-hidden","true");
+  $("openMenu").setAttribute("aria-expanded","false");
+}
+$("openMenu").addEventListener("click",()=>{
+  backdrop.classList.add("open");
+  backdrop.setAttribute("aria-hidden","false");
+  $("openMenu").setAttribute("aria-expanded","true");
+});
+backdrop.addEventListener("click",e=>{
+  if(e.target===backdrop||e.target.closest("a")){
+    closeMenu();
+  }
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")closeMenu();
+});
+
+document.querySelectorAll(".drawer a").forEach(a=>{
+  a.addEventListener("click",()=>{
+    const target=$(a.getAttribute("href").slice(1));
+    if(target){
+      setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"start"}),50);
+    }
+  });
+});
+
+fillTimeSelects();
 applyLanguage();
+calc();
+calcPieces();
 </script>
-<script>if ("serviceWorker" in navigator) { window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js")); }</script>
 </body>
 </html>
