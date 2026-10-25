@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = "kes-norma-v1";
+﻿const CACHE_NAME = "kes-norma-v2";
 const FILES = [
   "./",
   "./index.html",
