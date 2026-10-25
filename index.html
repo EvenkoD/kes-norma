@@ -1,0 +1,290 @@
+﻿<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KES Norma">
+<title>KES Norma</title>
+<style>
+:root{color-scheme:dark;--bg:#080d18;--panel:#111a2b;--muted:#91a2bd;--text:#f4f7fc;--line:#263650;--blue:#78aaff;--green:#42d6a0;--yellow:#ffc76b;--red:#ff7c96}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--bg)}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 10% 0%,#1b3152 0%,transparent 42%),linear-gradient(160deg,#0b1322,#080d18 65%);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:22px 15px calc(36px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+main{max-width:560px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:26px}
+.eyebrow{color:var(--blue);font-size:10px;font-weight:850;letter-spacing:1.6px;line-height:1.5}
+h1{font-size:clamp(28px,7vw,35px);letter-spacing:-1.2px;margin:0 0 8px}
+.sub{color:var(--muted);font-size:14px;line-height:1.55;margin:0 0 23px}
+.panel,.result{background:linear-gradient(145deg,#141f33,#101827);border:1px solid var(--line);border-radius:22px;padding:19px;margin-bottom:15px;box-shadow:0 12px 35px #00000012}
+label{display:block;font-size:12px;color:#b9c8df;margin:0 0 8px;font-weight:700;line-height:1.5}
+input,select{width:100%;min-width:0;font:inherit;font-size:16px;color:var(--text);background:#0a1220;border:1px solid #2d3e59;border-radius:13px;padding:14px 13px;outline:none}
+input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #78aaff20}
+input::placeholder{color:#63748f}
+select{width:auto;max-width:155px;padding:10px 9px;font-size:13px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px}
+.field{min-width:0}.full{grid-column:1/-1}
+.result{background:linear-gradient(145deg,#172a43,#111d30);border-color:#304967;padding:21px}
+.result.good{background:linear-gradient(145deg,#10352f,#10241f);border-color:#236c59}
+.result.mid{background:linear-gradient(145deg,#382d1b,#211e19);border-color:#745a2c}
+.result.low{background:linear-gradient(145deg,#351f2b,#211722);border-color:#754050}
+.result-label{font-size:13px;color:#c1d0e5;font-weight:750}
+.percent{font-size:clamp(48px,13vw,62px);font-weight:850;letter-spacing:-2.5px;line-height:1.15;margin:9px 0 17px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.track{height:9px;background:#ffffff15;border-radius:30px;overflow:hidden}
+.bar{height:100%;width:0;background:var(--blue);border-radius:inherit;transition:width .25s ease}
+.good .bar{background:var(--green)}.mid .bar{background:var(--yellow)}.low .bar{background:var(--red)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
+.stat{background:#07101d55;border:1px solid #ffffff09;border-radius:15px;padding:14px;min-width:0}
+.stat small{display:block;color:#a9bad2;font-size:11px;line-height:1.5;margin-bottom:7px}
+.stat strong{display:block;font-size:clamp(17px,4vw,21px);font-weight:800;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.buttons{display:flex;gap:10px;margin-top:17px}
+button{font:inherit;font-size:13px;font-weight:800;border:1px solid transparent;border-radius:13px;padding:13px 14px;min-height:46px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:active{transform:scale(.98);filter:brightness(.94)}
+.primary{background:linear-gradient(135deg,#8bb7ff,#6197f2);color:#081427;flex:1}
+.secondary{background:#202e44;color:#e5edfa;border-color:#30415c}
+.danger{background:#3a202b;color:#ffcbd5;border-color:#603140}
+.section-title{font-size:18px;letter-spacing:-.3px;margin:0 0 6px}
+.section-sub{font-size:12px;color:var(--muted);line-height:1.6;margin:0 0 14px}
+.average{font-size:32px;font-weight:850;letter-spacing:-1px;margin:4px 0 15px}
+.history-item{border-top:1px solid var(--line);padding:15px 2px;display:flex;align-items:center;gap:10px;justify-content:space-between}
+.hist-main{min-width:0}.hist-date{font-weight:750;font-size:14px}
+.hist-meta{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5}
+.hist-percent{font-size:19px;font-weight:850;white-space:nowrap}
+.empty{color:var(--muted);font-size:14px;padding:13px 0}
+footer{text-align:center;color:#71829a;font-size:11px;line-height:1.6;margin-top:23px}
+@media(min-width:500px){body{padding-top:30px}.panel,.result{padding:22px}}
+@media(max-width:360px){body{padding:15px 11px calc(28px + env(safe-area-inset-bottom))}.fields{grid-template-columns:1fr}.full{grid-column:auto}.buttons{flex-direction:column}.percent{font-size:48px}select{max-width:135px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important}}
+</style>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#0b1220">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="KES Norma">
+<meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+<main>
+  <div class="top">
+    <div class="eyebrow" data-i18n="eyebrow">Р РћР—Р РђРҐРЈРќРћРљ РџР РћР”РЈРљРўРР’РќРћРЎРўР†</div>
+    <select id="language" aria-label="Language">
+      <option value="uk">рџ‡єрџ‡¦ РЈРєСЂР°С—РЅСЃСЊРєР°</option>
+      <option value="cs">рџ‡Ёрџ‡ї ДЊeЕЎtina</option>
+      <option value="pl">рџ‡µрџ‡± Polski</option>
+    </select>
+  </div>
+
+  <h1 data-i18n="title">KES Norma</h1>
+  <p class="sub" data-i18n="subtitle">РЁРІРёРґРєРёР№ СЂРѕР·СЂР°С…СѓРЅРѕРє РІРёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё.</p>
+
+  <section class="panel">
+    <div class="fields">
+      <div class="field">
+        <label for="rate" data-i18n="rateLabel">РќРѕСЂРјР° Р·Р° РіРѕРґРёРЅСѓ (С€С‚.)</label>
+        <input id="rate" type="number" min="0" step="any" inputmode="decimal" placeholder="РќР°РїСЂРёРєР»Р°Рґ, 100">
+      </div>
+      <div class="field">
+        <label for="made" data-i18n="madeLabel">Р’РёРіРѕС‚РѕРІР»РµРЅРѕ Р·Р° Р·РјС–РЅСѓ (С€С‚.)</label>
+        <input id="made" type="number" min="0" step="any" inputmode="decimal" placeholder="РќР°РїСЂРёРєР»Р°Рґ, 820">
+      </div>
+      <div class="field full">
+        <label for="hours" data-i18n="hoursLabel">РўСЂРёРІР°Р»С–СЃС‚СЊ Р·РјС–РЅРё (РіРѕРґРёРЅРё)</label>
+        <input id="hours" type="number" min="0.1" max="24" step="0.5" value="7.5">
+      </div>
+    </div>
+    <p class="section-sub" style="margin:12px 0 0" data-i18n="defaultHours">РўСЂРёРІР°Р»С–СЃС‚СЊ Р·РјС–РЅРё Р·Р° Р·Р°РјРѕРІС‡СѓРІР°РЅРЅСЏРј: 7,5 РіРѕРґ.</p>
+  </section>
+
+  <section id="result" class="result low">
+    <div class="result-label" data-i18n="completion">Р’РёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё</div>
+    <div id="percent" class="percent">вЂ”%</div>
+    <div class="track"><div id="bar" class="bar"></div></div>
+    <div class="stats">
+      <div class="stat"><small data-i18n="targetLabel">РџР»Р°РЅ РЅР° Р·РјС–РЅСѓ</small><strong id="target">вЂ”</strong></div>
+      <div class="stat"><small id="leftLabel">Р—Р°Р»РёС€РёР»РѕСЃСЏ РґРѕ 100%</small><strong id="left">вЂ”</strong></div>
+    </div>
+    <p id="message" class="section-sub" style="margin:13px 0 0" data-i18n="enterValues">Р’РІРµРґРё РЅРѕСЂРјСѓ Р·Р° РіРѕРґРёРЅСѓ С‚Р° РєС–Р»СЊРєС–СЃС‚СЊ РІРёРіРѕС‚РѕРІР»РµРЅРёС… РІРёСЂРѕР±С–РІ.</p>
+    <div class="buttons">
+      <button class="primary" id="save" data-i18n="save">Р—Р±РµСЂРµРіС‚Рё Р·РјС–РЅСѓ</button>
+      <button class="secondary" id="clear" data-i18n="clear">РћС‡РёСЃС‚РёС‚Рё РїРѕР»СЏ</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2 class="section-title" data-i18n="historyTitle">Р†СЃС‚РѕСЂС–СЏ Р·РјС–РЅ</h2>
+    <p class="section-sub" data-i18n="historyDesc">Р†СЃС‚РѕСЂС–СЏ Р·Р±РµСЂС–РіР°С”С‚СЊСЃСЏ РЅР° С†СЊРѕРјСѓ РїСЂРёСЃС‚СЂРѕС— С‚Р° РґРѕСЃС‚СѓРїРЅР° РѕС„Р»Р°Р№РЅ.</p>
+    <div class="section-sub" data-i18n="averageLabel">РЎРµСЂРµРґРЅС” РІРёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё</div>
+    <div id="average" class="average">вЂ”%</div>
+    <div id="history"></div>
+    <div class="buttons">
+      <button class="secondary" id="export" data-i18n="export">Р•РєСЃРїРѕСЂС‚ CSV</button>
+      <button class="danger" id="deleteHistory" data-i18n="deleteHistory">Р’РёРґР°Р»РёС‚Рё С–СЃС‚РѕСЂС–СЋ</button>
+    </div>
+  </section>
+  <footer data-i18n="footer">Р†СЃС‚РѕСЂС–СЏ Р·РјС–РЅ Р·Р±РµСЂС–РіР°С”С‚СЊСЃСЏ Р»РёС€Рµ РЅР° С†СЊРѕРјСѓ РїСЂРёСЃС‚СЂРѕС—.</footer>
+</main>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const translations = {
+ uk:{
+  eyebrow:"Р РћР—Р РђРҐРЈРќРћРљ РџР РћР”РЈРљРўРР’РќРћРЎРўР†",title:"KES Norma",subtitle:"РЁРІРёРґРєРёР№ СЂРѕР·СЂР°С…СѓРЅРѕРє РІРёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё.",
+  rateLabel:"РќРѕСЂРјР° Р·Р° РіРѕРґРёРЅСѓ (С€С‚.)",madeLabel:"Р’РёРіРѕС‚РѕРІР»РµРЅРѕ Р·Р° Р·РјС–РЅСѓ (С€С‚.)",hoursLabel:"РўСЂРёРІР°Р»С–СЃС‚СЊ Р·РјС–РЅРё (РіРѕРґРёРЅРё)",
+  defaultHours:"РўСЂРёРІР°Р»С–СЃС‚СЊ Р·РјС–РЅРё Р·Р° Р·Р°РјРѕРІС‡СѓРІР°РЅРЅСЏРј: 7,5 РіРѕРґ.",completion:"Р’РёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё",targetLabel:"РџР»Р°РЅ РЅР° Р·РјС–РЅСѓ",
+  leftLabel:"Р—Р°Р»РёС€РёР»РѕСЃСЏ РґРѕ 100%",enterValues:"Р’РІРµРґРё РЅРѕСЂРјСѓ Р·Р° РіРѕРґРёРЅСѓ С‚Р° РєС–Р»СЊРєС–СЃС‚СЊ РІРёРіРѕС‚РѕРІР»РµРЅРёС… РІРёСЂРѕР±С–РІ.",
+  save:"Р—Р±РµСЂРµРіС‚Рё Р·РјС–РЅСѓ",clear:"РћС‡РёСЃС‚РёС‚Рё РїРѕР»СЏ",historyTitle:"Р†СЃС‚РѕСЂС–СЏ Р·РјС–РЅ",
+  historyDesc:"Р†СЃС‚РѕСЂС–СЏ Р·Р±РµСЂС–РіР°С”С‚СЊСЃСЏ РЅР° С†СЊРѕРјСѓ РїСЂРёСЃС‚СЂРѕС— С‚Р° РґРѕСЃС‚СѓРїРЅР° РѕС„Р»Р°Р№РЅ.",averageLabel:"РЎРµСЂРµРґРЅС” РІРёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё",
+  export:"Р•РєСЃРїРѕСЂС‚ CSV",deleteHistory:"Р’РёРґР°Р»РёС‚Рё С–СЃС‚РѕСЂС–СЋ",footer:"Р†СЃС‚РѕСЂС–СЏ Р·РјС–РЅ Р·Р±РµСЂС–РіР°С”С‚СЊСЃСЏ Р»РёС€Рµ РЅР° С†СЊРѕРјСѓ РїСЂРёСЃС‚СЂРѕС—.",
+  over:"РџРѕРЅР°Рґ РЅРѕСЂРјСѓ",remaining:"Р—Р°Р»РёС€РёР»РѕСЃСЏ РґРѕ 100%",complete:"РќРѕСЂРјСѓ РІРёРєРѕРЅР°РЅРѕ! Р§СѓРґРѕРІР° СЂРѕР±РѕС‚Р°!",
+  short:"Р”Рѕ РїР»Р°РЅСѓ РЅРµ РІРёСЃС‚Р°С‡Р°С”",invalid:"Р’РІРµРґРё РїСЂР°РІРёР»СЊРЅСѓ РЅРѕСЂРјСѓ, РєС–Р»СЊРєС–СЃС‚СЊ РІРёСЂРѕР±С–РІ С– С‚СЂРёРІР°Р»С–СЃС‚СЊ Р·РјС–РЅРё.",
+  saved:"Р—РјС–РЅСѓ Р·Р±РµСЂРµР¶РµРЅРѕ вњ“",alertInvalid:"РЎРїРѕС‡Р°С‚РєСѓ РІРІРµРґРё РїСЂР°РІРёР»СЊРЅС– Р·РЅР°С‡РµРЅРЅСЏ.",
+  empty:"Р—Р±РµСЂРµР¶РµРЅРёС… Р·РјС–РЅ РїРѕРєРё РЅРµРјР°С”.",made:"Р’РёРіРѕС‚РѕРІР»РµРЅРѕ",plan:"РїР»Р°РЅ",hours:"РіРѕРґ",
+  confirmDelete:"Р’РёРґР°Р»РёС‚Рё РІСЃСЋ С–СЃС‚РѕСЂС–СЋ Р·РјС–РЅ? Р¦СЋ РґС–СЋ РЅРµРјРѕР¶Р»РёРІРѕ СЃРєР°СЃСѓРІР°С‚Рё.",
+  emptyExport:"Р†СЃС‚РѕСЂС–СЏ РїРѕРєРё РїРѕСЂРѕР¶РЅСЏ.",date:"Р”Р°С‚Р°",rate:"РќРѕСЂРјР° Р·Р° РіРѕРґРёРЅСѓ",qty:"Р’РёРіРѕС‚РѕРІР»РµРЅРѕ",shiftHours:"Р“РѕРґРёРЅРё",percent:"Р’С–РґСЃРѕС‚РѕРє",
+  ratePlaceholder:"РќР°РїСЂРёРєР»Р°Рґ, 100",madePlaceholder:"РќР°РїСЂРёРєР»Р°Рґ, 820",units:"С€С‚."
+ },
+ cs:{
+  eyebrow:"VГќPOДЊET PRODUKTIVITY",title:"KES Norma",subtitle:"RychlГЅ vГЅpoДЌet plnД›nГ­ normy.",
+  rateLabel:"Norma za hodinu (ks)",madeLabel:"Vyrobeno za smД›nu (ks)",hoursLabel:"DГ©lka smД›ny (hodiny)",
+  defaultHours:"VГЅchozГ­ dГ©lka smД›ny: 7,5 h.",completion:"PlnД›nГ­ normy",targetLabel:"PlГЎn na smД›nu",
+  leftLabel:"ZbГЅvГЎ do 100 %",enterValues:"Zadej hodinovou normu a poДЌet vyrobenГЅch kusЕЇ.",
+  save:"UloЕѕit smД›nu",clear:"Vymazat pole",historyTitle:"Historie smД›n",
+  historyDesc:"Historie se uklГЎdГЎ v tomto zaЕ™Г­zenГ­ a funguje offline.",averageLabel:"PrЕЇmД›rnГ© plnД›nГ­ normy",
+  export:"Export CSV",deleteHistory:"Smazat historii",footer:"Historie smД›n se uklГЎdГЎ pouze v tomto zaЕ™Г­zenГ­.",
+  over:"Nad normu",remaining:"ZbГЅvГЎ do 100 %",complete:"Norma splnД›na! SkvД›lГЎ prГЎce!",
+  short:"Do plГЎnu chybГ­",invalid:"Zadej platnou normu, poДЌet kusЕЇ a dГ©lku smД›ny.",
+  saved:"SmД›na uloЕѕena вњ“",alertInvalid:"Nejprve zadej sprГЎvnГ© hodnoty.",
+  empty:"ZatГ­m nejsou uloЕѕeny ЕѕГЎdnГ© smД›ny.",made:"Vyrobeno",plan:"plГЎn",hours:"h",
+  confirmDelete:"Smazat celou historii smД›n? Tuto akci nelze vrГЎtit.",
+  emptyExport:"Historie je zatГ­m prГЎzdnГЎ.",date:"Datum",rate:"Norma za hodinu",qty:"Vyrobeno",shiftHours:"Hodiny",percent:"Procento",
+  ratePlaceholder:"NapЕ™Г­klad 100",madePlaceholder:"NapЕ™Г­klad 820",units:"ks"
+ },
+ pl:{
+  eyebrow:"OBLICZANIE WYDAJNOЕљCI",title:"KES Norma",subtitle:"Szybkie obliczanie realizacji normy.",
+  rateLabel:"Norma na godzinД™ (szt.)",madeLabel:"Wyprodukowano na zmianie (szt.)",hoursLabel:"DЕ‚ugoЕ›Д‡ zmiany (godziny)",
+  defaultHours:"DomyЕ›lna dЕ‚ugoЕ›Д‡ zmiany: 7,5 godz.",completion:"Realizacja normy",targetLabel:"Plan na zmianД™",
+  leftLabel:"PozostaЕ‚o do 100%",enterValues:"Wpisz normД™ godzinowД… i liczbД™ wyprodukowanych sztuk.",
+  save:"Zapisz zmianД™",clear:"WyczyЕ›Д‡ pola",historyTitle:"Historia zmian",
+  historyDesc:"Historia jest zapisywana na tym urzД…dzeniu i dziaЕ‚a offline.",averageLabel:"Ељrednia realizacja normy",
+  export:"Eksport CSV",deleteHistory:"UsuЕ„ historiД™",footer:"Historia zmian jest przechowywana tylko na tym urzД…dzeniu.",
+  over:"PowyЕјej normy",remaining:"PozostaЕ‚o do 100%",complete:"Norma wykonana! Ељwietna robota!",
+  short:"Do planu brakuje",invalid:"Wpisz poprawnД… normД™, liczbД™ sztuk i czas zmiany.",
+  saved:"Zmiana zapisana вњ“",alertInvalid:"Najpierw wpisz prawidЕ‚owe wartoЕ›ci.",
+  empty:"Brak zapisanych zmian.",made:"Wyprodukowano",plan:"plan",hours:"godz.",
+  confirmDelete:"UsunД…Д‡ caЕ‚Д… historiД™ zmian? Tej operacji nie moЕјna cofnД…Д‡.",
+  emptyExport:"Historia jest pusta.",date:"Data",rate:"Norma na godzinД™",qty:"Wyprodukowano",shiftHours:"Godziny",percent:"Procent",
+  ratePlaceholder:"Na przykЕ‚ad 100",madePlaceholder:"Na przykЕ‚ad 820",units:"szt."
+ }
+};
+let lang = localStorage.getItem("normaLanguage") || "uk";
+if (!["uk","cs","pl"].includes(lang)) lang = "uk";
+const t = key => translations[lang][key] || translations.uk[key];
+const locale = () => lang==="uk" ? "uk-UA" : lang==="cs" ? "cs-CZ" : "pl-PL";
+const fmt = n => Number(n).toLocaleString(locale(),{maximumFractionDigits:2});
+
+function applyLanguage(){
+ document.documentElement.lang=lang;
+ $("language").value=lang;
+ document.querySelectorAll("[data-i18n]").forEach(el=>{
+  const key=el.dataset.i18n;
+  if(t(key)) el.textContent=t(key);
+ });
+ $("rate").placeholder=t("ratePlaceholder");
+ $("made").placeholder=t("madePlaceholder");
+ calc();
+ renderHistory();
+}
+$("language").addEventListener("change",()=>{
+ lang=$("language").value;
+ localStorage.setItem("normaLanguage",lang);
+ applyLanguage();
+});
+
+const number = id => {
+ const raw=$(id).value.trim().replace(",",".");
+ return raw===""?NaN:Number(raw);
+};
+function calc(){
+ const rate=number("rate"),made=number("made"),hours=number("hours");
+ const valid=Number.isFinite(rate)&&rate>0&&Number.isFinite(made)&&made>=0&&Number.isFinite(hours)&&hours>0&&hours<=24;
+ const box=$("result");
+ if(!valid){
+  $("percent").textContent="вЂ”%";$("target").textContent="вЂ”";$("left").textContent="вЂ”";
+  $("message").textContent=t("enterValues");$("bar").style.width="0%";box.className="result low";
+  $("leftLabel").textContent=t("leftLabel");
+  return null;
+ }
+ const target=rate*hours,pct=made/target*100,remaining=Math.max(0,Math.ceil(target-made));
+ $("percent").textContent=fmt(pct)+"%";$("target").textContent=fmt(target);
+ $("leftLabel").textContent=made>=target?t("over"):t("remaining");
+ $("left").textContent=made>=target?"+"+fmt(made-target):fmt(remaining);
+ $("bar").style.width=Math.min(pct,100)+"%";
+ box.className="result "+(pct>=100?"good":pct>=80?"mid":"low");
+ $("message").textContent=pct>=100?t("complete"):t("short")+" "+fmt(remaining)+" "+t("units")+".";
+ return {rate,made,hours,target,pct};
+}
+["rate","made","hours"].forEach(id=>$(id).addEventListener("input",calc));
+$("clear").addEventListener("click",()=>{
+ $("rate").value="";$("made").value="";$("hours").value="7.5";calc();$("rate").focus();
+});
+
+function getHistory(){
+ try{
+  const data=JSON.parse(localStorage.getItem("normaHistoryV2")||"[]");
+  return Array.isArray(data)?data.filter(x=>x&&Number.isFinite(Number(x.pct))):[];
+ }catch(e){return []}
+}
+function setHistory(items){localStorage.setItem("normaHistoryV2",JSON.stringify(items))}
+function dateLabel(iso){
+ const d=new Date(iso);
+ return Number.isNaN(d.getTime()) ? String(iso||"") : d.toLocaleString(locale(),{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
+}
+function renderHistory(){
+ const items=getHistory();
+ $("average").textContent=items.length?fmt(items.reduce((s,x)=>s+Number(x.pct),0)/items.length)+"%":"вЂ”%";
+ if(!items.length){$("history").innerHTML='<div class="empty">'+t("empty")+"</div>";return}
+ $("history").innerHTML=items.slice().reverse().map(x=>{
+  const pct=Number(x.pct);
+  const color=pct>=100?"#34d399":pct>=80?"#fbbf24":"#fb7185";
+  return '<div class="history-item"><div class="hist-main"><div class="hist-date">'+dateLabel(x.date)+'</div><div class="hist-meta">'+t("made")+" "+fmt(x.made)+" / "+t("plan")+" "+fmt(x.target)+" "+t("units")+" В· "+fmt(x.hours)+" "+t("hours")+'</div></div><div class="hist-percent" style="color:'+color+'">'+fmt(pct)+'%</div></div>';
+ }).join("");
+}
+$("save").addEventListener("click",()=>{
+ const c=calc();
+ if(!c){alert(t("alertInvalid"));return}
+ const items=getHistory();
+ items.push({...c,date:new Date().toISOString()});
+ setHistory(items);renderHistory();
+ const btn=$("save");
+ btn.textContent=t("saved");
+ window.setTimeout(()=>{btn.textContent=t("save")},1300);
+});
+$("deleteHistory").addEventListener("click",()=>{
+ if(getHistory().length&&confirm(t("confirmDelete"))){setHistory([]);renderHistory()}
+});
+$("export").addEventListener("click",()=>{
+ const items=getHistory();
+ if(!items.length){alert(t("emptyExport"));return}
+ const rows=[[t("date"),t("rate"),t("qty"),t("shiftHours"),t("plan"),t("percent")]];
+ items.forEach(x=>rows.push([dateLabel(x.date),x.rate,x.made,x.hours,x.target,Number(x.pct).toFixed(2)]));
+ const csv="\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(";")).join("\r\n");
+ const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="KES_Norma_history.csv";document.body.appendChild(a);a.click();a.remove();
+ window.setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+applyLanguage();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(error => console.error("Service worker:", error));
+  });
+}
+</script>
+</body>
+</html>
+
