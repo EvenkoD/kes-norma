@@ -1,7 +1,8 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
+<link rel="manifest" href="./manifest.json">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#101827">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,71 +59,66 @@ footer{text-align:center;color:#71829a;font-size:11px;line-height:1.6;margin-top
 @media(max-width:360px){body{padding:15px 11px calc(28px + env(safe-area-inset-bottom))}.fields{grid-template-columns:1fr}.full{grid-column:auto}.buttons{flex-direction:column}.percent{font-size:48px}select{max-width:135px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important}}
 </style>
-<link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#0b1220">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="KES Norma">
-<meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
 <main>
   <div class="top">
-    <div class="eyebrow" data-i18n="eyebrow">Р РћР—Р РђРҐРЈРќРћРљ РџР РћР”РЈРљРўРР’РќРћРЎРўР†</div>
+    <div class="eyebrow" data-i18n="eyebrow">РОЗРАХУНОК ПРОДУКТИВНОСТІ</div>
     <select id="language" aria-label="Language">
-      <option value="uk">рџ‡єрџ‡¦ РЈРєСЂР°С—РЅСЃСЊРєР°</option>
-      <option value="cs">рџ‡Ёрџ‡ї ДЊeЕЎtina</option>
-      <option value="pl">рџ‡µрџ‡± Polski</option>
+      <option value="uk">🇺🇦 Українська</option>
+      <option value="cs">🇨🇿 Čeština</option>
+      <option value="pl">🇵🇱 Polski</option>
     </select>
   </div>
 
   <h1 data-i18n="title">KES Norma</h1>
-  <p class="sub" data-i18n="subtitle">РЁРІРёРґРєРёР№ СЂРѕР·СЂР°С…СѓРЅРѕРє РІРёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё.</p>
+  <p class="sub" data-i18n="subtitle">Швидкий розрахунок виконання норми.</p>
 
   <section class="panel">
     <div class="fields">
       <div class="field">
-        <label for="rate" data-i18n="rateLabel">РќРѕСЂРјР° Р·Р° РіРѕРґРёРЅСѓ (С€С‚.)</label>
-        <input id="rate" type="number" min="0" step="any" inputmode="decimal" placeholder="РќР°РїСЂРёРєР»Р°Рґ, 100">
+        <label for="rate" data-i18n="rateLabel">Норма за годину (шт.)</label>
+        <input id="rate" type="number" min="0" step="any" inputmode="decimal" placeholder="Наприклад, 100">
       </div>
       <div class="field">
-        <label for="made" data-i18n="madeLabel">Р’РёРіРѕС‚РѕРІР»РµРЅРѕ Р·Р° Р·РјС–РЅСѓ (С€С‚.)</label>
-        <input id="made" type="number" min="0" step="any" inputmode="decimal" placeholder="РќР°РїСЂРёРєР»Р°Рґ, 820">
+        <label for="made" data-i18n="madeLabel">Виготовлено за зміну (шт.)</label>
+        <input id="made" type="number" min="0" step="any" inputmode="decimal" placeholder="Наприклад, 820">
       </div>
       <div class="field full">
-        <label for="hours" data-i18n="hoursLabel">РўСЂРёРІР°Р»С–СЃС‚СЊ Р·РјС–РЅРё (РіРѕРґРёРЅРё)</label>
+        <label for="hours" data-i18n="hoursLabel">Тривалість зміни (години)</label>
         <input id="hours" type="number" min="0.1" max="24" step="0.5" value="7.5">
       </div>
     </div>
-    <p class="section-sub" style="margin:12px 0 0" data-i18n="defaultHours">РўСЂРёРІР°Р»С–СЃС‚СЊ Р·РјС–РЅРё Р·Р° Р·Р°РјРѕРІС‡СѓРІР°РЅРЅСЏРј: 7,5 РіРѕРґ.</p>
+    <p class="section-sub" style="margin:12px 0 0" data-i18n="defaultHours">Тривалість зміни за замовчуванням: 7,5 год.</p>
   </section>
 
   <section id="result" class="result low">
-    <div class="result-label" data-i18n="completion">Р’РёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё</div>
-    <div id="percent" class="percent">вЂ”%</div>
+    <div class="result-label" data-i18n="completion">Виконання норми</div>
+    <div id="percent" class="percent">—%</div>
     <div class="track"><div id="bar" class="bar"></div></div>
     <div class="stats">
-      <div class="stat"><small data-i18n="targetLabel">РџР»Р°РЅ РЅР° Р·РјС–РЅСѓ</small><strong id="target">вЂ”</strong></div>
-      <div class="stat"><small id="leftLabel">Р—Р°Р»РёС€РёР»РѕСЃСЏ РґРѕ 100%</small><strong id="left">вЂ”</strong></div>
+      <div class="stat"><small data-i18n="targetLabel">План на зміну</small><strong id="target">—</strong></div>
+      <div class="stat"><small id="leftLabel">Залишилося до 100%</small><strong id="left">—</strong></div>
     </div>
-    <p id="message" class="section-sub" style="margin:13px 0 0" data-i18n="enterValues">Р’РІРµРґРё РЅРѕСЂРјСѓ Р·Р° РіРѕРґРёРЅСѓ С‚Р° РєС–Р»СЊРєС–СЃС‚СЊ РІРёРіРѕС‚РѕРІР»РµРЅРёС… РІРёСЂРѕР±С–РІ.</p>
+    <p id="message" class="section-sub" style="margin:13px 0 0" data-i18n="enterValues">Введи норму за годину та кількість виготовлених виробів.</p>
     <div class="buttons">
-      <button class="primary" id="save" data-i18n="save">Р—Р±РµСЂРµРіС‚Рё Р·РјС–РЅСѓ</button>
-      <button class="secondary" id="clear" data-i18n="clear">РћС‡РёСЃС‚РёС‚Рё РїРѕР»СЏ</button>
+      <button class="primary" id="save" data-i18n="save">Зберегти зміну</button>
+      <button class="secondary" id="clear" data-i18n="clear">Очистити поля</button>
     </div>
   </section>
 
   <section class="panel">
-    <h2 class="section-title" data-i18n="historyTitle">Р†СЃС‚РѕСЂС–СЏ Р·РјС–РЅ</h2>
-    <p class="section-sub" data-i18n="historyDesc">Р†СЃС‚РѕСЂС–СЏ Р·Р±РµСЂС–РіР°С”С‚СЊСЃСЏ РЅР° С†СЊРѕРјСѓ РїСЂРёСЃС‚СЂРѕС— С‚Р° РґРѕСЃС‚СѓРїРЅР° РѕС„Р»Р°Р№РЅ.</p>
-    <div class="section-sub" data-i18n="averageLabel">РЎРµСЂРµРґРЅС” РІРёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё</div>
-    <div id="average" class="average">вЂ”%</div>
+    <h2 class="section-title" data-i18n="historyTitle">Історія змін</h2>
+    <p class="section-sub" data-i18n="historyDesc">Історія зберігається на цьому пристрої та доступна офлайн.</p>
+    <div class="section-sub" data-i18n="averageLabel">Середнє виконання норми</div>
+    <div id="average" class="average">—%</div>
     <div id="history"></div>
     <div class="buttons">
-      <button class="secondary" id="export" data-i18n="export">Р•РєСЃРїРѕСЂС‚ CSV</button>
-      <button class="danger" id="deleteHistory" data-i18n="deleteHistory">Р’РёРґР°Р»РёС‚Рё С–СЃС‚РѕСЂС–СЋ</button>
+      <button class="secondary" id="export" data-i18n="export">Експорт CSV</button>
+      <button class="danger" id="deleteHistory" data-i18n="deleteHistory">Видалити історію</button>
     </div>
   </section>
-  <footer data-i18n="footer">Р†СЃС‚РѕСЂС–СЏ Р·РјС–РЅ Р·Р±РµСЂС–РіР°С”С‚СЊСЃСЏ Р»РёС€Рµ РЅР° С†СЊРѕРјСѓ РїСЂРёСЃС‚СЂРѕС—.</footer>
+  <footer data-i18n="footer">Історія змін зберігається лише на цьому пристрої.</footer>
 </main>
 
 <script>
@@ -130,52 +126,52 @@ footer{text-align:center;color:#71829a;font-size:11px;line-height:1.6;margin-top
 const $ = id => document.getElementById(id);
 const translations = {
  uk:{
-  eyebrow:"Р РћР—Р РђРҐРЈРќРћРљ РџР РћР”РЈРљРўРР’РќРћРЎРўР†",title:"KES Norma",subtitle:"РЁРІРёРґРєРёР№ СЂРѕР·СЂР°С…СѓРЅРѕРє РІРёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё.",
-  rateLabel:"РќРѕСЂРјР° Р·Р° РіРѕРґРёРЅСѓ (С€С‚.)",madeLabel:"Р’РёРіРѕС‚РѕРІР»РµРЅРѕ Р·Р° Р·РјС–РЅСѓ (С€С‚.)",hoursLabel:"РўСЂРёРІР°Р»С–СЃС‚СЊ Р·РјС–РЅРё (РіРѕРґРёРЅРё)",
-  defaultHours:"РўСЂРёРІР°Р»С–СЃС‚СЊ Р·РјС–РЅРё Р·Р° Р·Р°РјРѕРІС‡СѓРІР°РЅРЅСЏРј: 7,5 РіРѕРґ.",completion:"Р’РёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё",targetLabel:"РџР»Р°РЅ РЅР° Р·РјС–РЅСѓ",
-  leftLabel:"Р—Р°Р»РёС€РёР»РѕСЃСЏ РґРѕ 100%",enterValues:"Р’РІРµРґРё РЅРѕСЂРјСѓ Р·Р° РіРѕРґРёРЅСѓ С‚Р° РєС–Р»СЊРєС–СЃС‚СЊ РІРёРіРѕС‚РѕРІР»РµРЅРёС… РІРёСЂРѕР±С–РІ.",
-  save:"Р—Р±РµСЂРµРіС‚Рё Р·РјС–РЅСѓ",clear:"РћС‡РёСЃС‚РёС‚Рё РїРѕР»СЏ",historyTitle:"Р†СЃС‚РѕСЂС–СЏ Р·РјС–РЅ",
-  historyDesc:"Р†СЃС‚РѕСЂС–СЏ Р·Р±РµСЂС–РіР°С”С‚СЊСЃСЏ РЅР° С†СЊРѕРјСѓ РїСЂРёСЃС‚СЂРѕС— С‚Р° РґРѕСЃС‚СѓРїРЅР° РѕС„Р»Р°Р№РЅ.",averageLabel:"РЎРµСЂРµРґРЅС” РІРёРєРѕРЅР°РЅРЅСЏ РЅРѕСЂРјРё",
-  export:"Р•РєСЃРїРѕСЂС‚ CSV",deleteHistory:"Р’РёРґР°Р»РёС‚Рё С–СЃС‚РѕСЂС–СЋ",footer:"Р†СЃС‚РѕСЂС–СЏ Р·РјС–РЅ Р·Р±РµСЂС–РіР°С”С‚СЊСЃСЏ Р»РёС€Рµ РЅР° С†СЊРѕРјСѓ РїСЂРёСЃС‚СЂРѕС—.",
-  over:"РџРѕРЅР°Рґ РЅРѕСЂРјСѓ",remaining:"Р—Р°Р»РёС€РёР»РѕСЃСЏ РґРѕ 100%",complete:"РќРѕСЂРјСѓ РІРёРєРѕРЅР°РЅРѕ! Р§СѓРґРѕРІР° СЂРѕР±РѕС‚Р°!",
-  short:"Р”Рѕ РїР»Р°РЅСѓ РЅРµ РІРёСЃС‚Р°С‡Р°С”",invalid:"Р’РІРµРґРё РїСЂР°РІРёР»СЊРЅСѓ РЅРѕСЂРјСѓ, РєС–Р»СЊРєС–СЃС‚СЊ РІРёСЂРѕР±С–РІ С– С‚СЂРёРІР°Р»С–СЃС‚СЊ Р·РјС–РЅРё.",
-  saved:"Р—РјС–РЅСѓ Р·Р±РµСЂРµР¶РµРЅРѕ вњ“",alertInvalid:"РЎРїРѕС‡Р°С‚РєСѓ РІРІРµРґРё РїСЂР°РІРёР»СЊРЅС– Р·РЅР°С‡РµРЅРЅСЏ.",
-  empty:"Р—Р±РµСЂРµР¶РµРЅРёС… Р·РјС–РЅ РїРѕРєРё РЅРµРјР°С”.",made:"Р’РёРіРѕС‚РѕРІР»РµРЅРѕ",plan:"РїР»Р°РЅ",hours:"РіРѕРґ",
-  confirmDelete:"Р’РёРґР°Р»РёС‚Рё РІСЃСЋ С–СЃС‚РѕСЂС–СЋ Р·РјС–РЅ? Р¦СЋ РґС–СЋ РЅРµРјРѕР¶Р»РёРІРѕ СЃРєР°СЃСѓРІР°С‚Рё.",
-  emptyExport:"Р†СЃС‚РѕСЂС–СЏ РїРѕРєРё РїРѕСЂРѕР¶РЅСЏ.",date:"Р”Р°С‚Р°",rate:"РќРѕСЂРјР° Р·Р° РіРѕРґРёРЅСѓ",qty:"Р’РёРіРѕС‚РѕРІР»РµРЅРѕ",shiftHours:"Р“РѕРґРёРЅРё",percent:"Р’С–РґСЃРѕС‚РѕРє",
-  ratePlaceholder:"РќР°РїСЂРёРєР»Р°Рґ, 100",madePlaceholder:"РќР°РїСЂРёРєР»Р°Рґ, 820",units:"С€С‚."
+  eyebrow:"РОЗРАХУНОК ПРОДУКТИВНОСТІ",title:"KES Norma",subtitle:"Швидкий розрахунок виконання норми.",
+  rateLabel:"Норма за годину (шт.)",madeLabel:"Виготовлено за зміну (шт.)",hoursLabel:"Тривалість зміни (години)",
+  defaultHours:"Тривалість зміни за замовчуванням: 7,5 год.",completion:"Виконання норми",targetLabel:"План на зміну",
+  leftLabel:"Залишилося до 100%",enterValues:"Введи норму за годину та кількість виготовлених виробів.",
+  save:"Зберегти зміну",clear:"Очистити поля",historyTitle:"Історія змін",
+  historyDesc:"Історія зберігається на цьому пристрої та доступна офлайн.",averageLabel:"Середнє виконання норми",
+  export:"Експорт CSV",deleteHistory:"Видалити історію",footer:"Історія змін зберігається лише на цьому пристрої.",
+  over:"Понад норму",remaining:"Залишилося до 100%",complete:"Норму виконано! Чудова робота!",
+  short:"До плану не вистачає",invalid:"Введи правильну норму, кількість виробів і тривалість зміни.",
+  saved:"Зміну збережено ✓",alertInvalid:"Спочатку введи правильні значення.",
+  empty:"Збережених змін поки немає.",made:"Виготовлено",plan:"план",hours:"год",
+  confirmDelete:"Видалити всю історію змін? Цю дію неможливо скасувати.",
+  emptyExport:"Історія поки порожня.",date:"Дата",rate:"Норма за годину",qty:"Виготовлено",shiftHours:"Години",percent:"Відсоток",
+  ratePlaceholder:"Наприклад, 100",madePlaceholder:"Наприклад, 820",units:"шт."
  },
  cs:{
-  eyebrow:"VГќPOДЊET PRODUKTIVITY",title:"KES Norma",subtitle:"RychlГЅ vГЅpoДЌet plnД›nГ­ normy.",
-  rateLabel:"Norma za hodinu (ks)",madeLabel:"Vyrobeno za smД›nu (ks)",hoursLabel:"DГ©lka smД›ny (hodiny)",
-  defaultHours:"VГЅchozГ­ dГ©lka smД›ny: 7,5 h.",completion:"PlnД›nГ­ normy",targetLabel:"PlГЎn na smД›nu",
-  leftLabel:"ZbГЅvГЎ do 100 %",enterValues:"Zadej hodinovou normu a poДЌet vyrobenГЅch kusЕЇ.",
-  save:"UloЕѕit smД›nu",clear:"Vymazat pole",historyTitle:"Historie smД›n",
-  historyDesc:"Historie se uklГЎdГЎ v tomto zaЕ™Г­zenГ­ a funguje offline.",averageLabel:"PrЕЇmД›rnГ© plnД›nГ­ normy",
-  export:"Export CSV",deleteHistory:"Smazat historii",footer:"Historie smД›n se uklГЎdГЎ pouze v tomto zaЕ™Г­zenГ­.",
-  over:"Nad normu",remaining:"ZbГЅvГЎ do 100 %",complete:"Norma splnД›na! SkvД›lГЎ prГЎce!",
-  short:"Do plГЎnu chybГ­",invalid:"Zadej platnou normu, poДЌet kusЕЇ a dГ©lku smД›ny.",
-  saved:"SmД›na uloЕѕena вњ“",alertInvalid:"Nejprve zadej sprГЎvnГ© hodnoty.",
-  empty:"ZatГ­m nejsou uloЕѕeny ЕѕГЎdnГ© smД›ny.",made:"Vyrobeno",plan:"plГЎn",hours:"h",
-  confirmDelete:"Smazat celou historii smД›n? Tuto akci nelze vrГЎtit.",
-  emptyExport:"Historie je zatГ­m prГЎzdnГЎ.",date:"Datum",rate:"Norma za hodinu",qty:"Vyrobeno",shiftHours:"Hodiny",percent:"Procento",
-  ratePlaceholder:"NapЕ™Г­klad 100",madePlaceholder:"NapЕ™Г­klad 820",units:"ks"
+  eyebrow:"VÝPOČET PRODUKTIVITY",title:"KES Norma",subtitle:"Rychlý výpočet plnění normy.",
+  rateLabel:"Norma za hodinu (ks)",madeLabel:"Vyrobeno za směnu (ks)",hoursLabel:"Délka směny (hodiny)",
+  defaultHours:"Výchozí délka směny: 7,5 h.",completion:"Plnění normy",targetLabel:"Plán na směnu",
+  leftLabel:"Zbývá do 100 %",enterValues:"Zadej hodinovou normu a počet vyrobených kusů.",
+  save:"Uložit směnu",clear:"Vymazat pole",historyTitle:"Historie směn",
+  historyDesc:"Historie se ukládá v tomto zařízení a funguje offline.",averageLabel:"Průměrné plnění normy",
+  export:"Export CSV",deleteHistory:"Smazat historii",footer:"Historie směn se ukládá pouze v tomto zařízení.",
+  over:"Nad normu",remaining:"Zbývá do 100 %",complete:"Norma splněna! Skvělá práce!",
+  short:"Do plánu chybí",invalid:"Zadej platnou normu, počet kusů a délku směny.",
+  saved:"Směna uložena ✓",alertInvalid:"Nejprve zadej správné hodnoty.",
+  empty:"Zatím nejsou uloženy žádné směny.",made:"Vyrobeno",plan:"plán",hours:"h",
+  confirmDelete:"Smazat celou historii směn? Tuto akci nelze vrátit.",
+  emptyExport:"Historie je zatím prázdná.",date:"Datum",rate:"Norma za hodinu",qty:"Vyrobeno",shiftHours:"Hodiny",percent:"Procento",
+  ratePlaceholder:"Například 100",madePlaceholder:"Například 820",units:"ks"
  },
  pl:{
-  eyebrow:"OBLICZANIE WYDAJNOЕљCI",title:"KES Norma",subtitle:"Szybkie obliczanie realizacji normy.",
-  rateLabel:"Norma na godzinД™ (szt.)",madeLabel:"Wyprodukowano na zmianie (szt.)",hoursLabel:"DЕ‚ugoЕ›Д‡ zmiany (godziny)",
-  defaultHours:"DomyЕ›lna dЕ‚ugoЕ›Д‡ zmiany: 7,5 godz.",completion:"Realizacja normy",targetLabel:"Plan na zmianД™",
-  leftLabel:"PozostaЕ‚o do 100%",enterValues:"Wpisz normД™ godzinowД… i liczbД™ wyprodukowanych sztuk.",
-  save:"Zapisz zmianД™",clear:"WyczyЕ›Д‡ pola",historyTitle:"Historia zmian",
-  historyDesc:"Historia jest zapisywana na tym urzД…dzeniu i dziaЕ‚a offline.",averageLabel:"Ељrednia realizacja normy",
-  export:"Eksport CSV",deleteHistory:"UsuЕ„ historiД™",footer:"Historia zmian jest przechowywana tylko na tym urzД…dzeniu.",
-  over:"PowyЕјej normy",remaining:"PozostaЕ‚o do 100%",complete:"Norma wykonana! Ељwietna robota!",
-  short:"Do planu brakuje",invalid:"Wpisz poprawnД… normД™, liczbД™ sztuk i czas zmiany.",
-  saved:"Zmiana zapisana вњ“",alertInvalid:"Najpierw wpisz prawidЕ‚owe wartoЕ›ci.",
+  eyebrow:"OBLICZANIE WYDAJNOŚCI",title:"KES Norma",subtitle:"Szybkie obliczanie realizacji normy.",
+  rateLabel:"Norma na godzinę (szt.)",madeLabel:"Wyprodukowano na zmianie (szt.)",hoursLabel:"Długość zmiany (godziny)",
+  defaultHours:"Domyślna długość zmiany: 7,5 godz.",completion:"Realizacja normy",targetLabel:"Plan na zmianę",
+  leftLabel:"Pozostało do 100%",enterValues:"Wpisz normę godzinową i liczbę wyprodukowanych sztuk.",
+  save:"Zapisz zmianę",clear:"Wyczyść pola",historyTitle:"Historia zmian",
+  historyDesc:"Historia jest zapisywana na tym urządzeniu i działa offline.",averageLabel:"Średnia realizacja normy",
+  export:"Eksport CSV",deleteHistory:"Usuń historię",footer:"Historia zmian jest przechowywana tylko na tym urządzeniu.",
+  over:"Powyżej normy",remaining:"Pozostało do 100%",complete:"Norma wykonana! Świetna robota!",
+  short:"Do planu brakuje",invalid:"Wpisz poprawną normę, liczbę sztuk i czas zmiany.",
+  saved:"Zmiana zapisana ✓",alertInvalid:"Najpierw wpisz prawidłowe wartości.",
   empty:"Brak zapisanych zmian.",made:"Wyprodukowano",plan:"plan",hours:"godz.",
-  confirmDelete:"UsunД…Д‡ caЕ‚Д… historiД™ zmian? Tej operacji nie moЕјna cofnД…Д‡.",
-  emptyExport:"Historia jest pusta.",date:"Data",rate:"Norma na godzinД™",qty:"Wyprodukowano",shiftHours:"Godziny",percent:"Procent",
-  ratePlaceholder:"Na przykЕ‚ad 100",madePlaceholder:"Na przykЕ‚ad 820",units:"szt."
+  confirmDelete:"Usunąć całą historię zmian? Tej operacji nie można cofnąć.",
+  emptyExport:"Historia jest pusta.",date:"Data",rate:"Norma na godzinę",qty:"Wyprodukowano",shiftHours:"Godziny",percent:"Procent",
+  ratePlaceholder:"Na przykład 100",madePlaceholder:"Na przykład 820",units:"szt."
  }
 };
 let lang = localStorage.getItem("normaLanguage") || "uk";
@@ -211,7 +207,7 @@ function calc(){
  const valid=Number.isFinite(rate)&&rate>0&&Number.isFinite(made)&&made>=0&&Number.isFinite(hours)&&hours>0&&hours<=24;
  const box=$("result");
  if(!valid){
-  $("percent").textContent="вЂ”%";$("target").textContent="вЂ”";$("left").textContent="вЂ”";
+  $("percent").textContent="—%";$("target").textContent="—";$("left").textContent="—";
   $("message").textContent=t("enterValues");$("bar").style.width="0%";box.className="result low";
   $("leftLabel").textContent=t("leftLabel");
   return null;
@@ -243,12 +239,12 @@ function dateLabel(iso){
 }
 function renderHistory(){
  const items=getHistory();
- $("average").textContent=items.length?fmt(items.reduce((s,x)=>s+Number(x.pct),0)/items.length)+"%":"вЂ”%";
+ $("average").textContent=items.length?fmt(items.reduce((s,x)=>s+Number(x.pct),0)/items.length)+"%":"—%";
  if(!items.length){$("history").innerHTML='<div class="empty">'+t("empty")+"</div>";return}
  $("history").innerHTML=items.slice().reverse().map(x=>{
   const pct=Number(x.pct);
   const color=pct>=100?"#34d399":pct>=80?"#fbbf24":"#fb7185";
-  return '<div class="history-item"><div class="hist-main"><div class="hist-date">'+dateLabel(x.date)+'</div><div class="hist-meta">'+t("made")+" "+fmt(x.made)+" / "+t("plan")+" "+fmt(x.target)+" "+t("units")+" В· "+fmt(x.hours)+" "+t("hours")+'</div></div><div class="hist-percent" style="color:'+color+'">'+fmt(pct)+'%</div></div>';
+  return '<div class="history-item"><div class="hist-main"><div class="hist-date">'+dateLabel(x.date)+'</div><div class="hist-meta">'+t("made")+" "+fmt(x.made)+" / "+t("plan")+" "+fmt(x.target)+" "+t("units")+" · "+fmt(x.hours)+" "+t("hours")+'</div></div><div class="hist-percent" style="color:'+color+'">'+fmt(pct)+'%</div></div>';
  }).join("");
 }
 $("save").addEventListener("click",()=>{
@@ -277,14 +273,6 @@ $("export").addEventListener("click",()=>{
 });
 applyLanguage();
 </script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js")
-      .catch(error => console.error("Service worker:", error));
-  });
-}
-</script>
+<script>if ("serviceWorker" in navigator) { window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js")); }</script>
 </body>
 </html>
-
