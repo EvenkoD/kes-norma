@@ -107,6 +107,22 @@ footer{text-align:center;color:#71829a;font-size:11px;line-height:1.6;margin-top
     </div>
   </section>
 
+  <section class="panel" id="forecastPanel">
+    <h2 class="section-title" data-i18n="forecastTitle">Прогноз кінця зміни</h2>
+    <p class="section-sub" data-i18n="forecastDesc">Вкажи, скільки годин уже відпрацював, щоб оцінити темп і результат до кінця зміни.</p>
+    <div class="field">
+      <label for="elapsed" data-i18n="elapsedLabel">Відпрацьовано годин</label>
+      <input id="elapsed" type="number" min="0" max="24" step="0.25" inputmode="decimal" placeholder="Наприклад, 3,5" value="0">
+    </div>
+    <div class="stats">
+      <div class="stat"><small data-i18n="paceLabel">Поточний темп</small><strong id="pace">—</strong></div>
+      <div class="stat"><small data-i18n="forecastLabel">Прогноз на кінець зміни</small><strong id="forecast">—</strong></div>
+      <div class="stat"><small data-i18n="neededLabel">Потрібно за годину відтепер</small><strong id="needed">—</strong></div>
+      <div class="stat"><small data-i18n="forecastPercentLabel">Прогноз виконання</small><strong id="forecastPercent">—%</strong></div>
+    </div>
+    <p id="forecastMessage" class="section-sub" style="margin:13px 0 0" data-i18n="forecastHint">Введи норму, кількість виробів і відпрацьований час.</p>
+  </section>
+
   <section class="panel">
     <h2 class="section-title" data-i18n="historyTitle">Історія змін</h2>
     <p class="section-sub" data-i18n="historyDesc">Історія зберігається на цьому пристрої та доступна офлайн.</p>
@@ -139,7 +155,8 @@ const translations = {
   empty:"Збережених змін поки немає.",made:"Виготовлено",plan:"план",hours:"год",
   confirmDelete:"Видалити всю історію змін? Цю дію неможливо скасувати.",
   emptyExport:"Історія поки порожня.",date:"Дата",rate:"Норма за годину",qty:"Виготовлено",shiftHours:"Години",percent:"Відсоток",
-  ratePlaceholder:"Наприклад, 100",madePlaceholder:"Наприклад, 820",units:"шт."
+  ratePlaceholder:"Наприклад, 100",madePlaceholder:"Наприклад, 820",units:"шт.",
+   forecastTitle:"Прогноз кінця зміни",forecastDesc:"Вкажи, скільки годин уже відпрацював, щоб оцінити темп і результат до кінця зміни.",elapsedLabel:"Відпрацьовано годин",paceLabel:"Поточний темп",forecastLabel:"Прогноз на кінець зміни",neededLabel:"Потрібно за годину відтепер",forecastPercentLabel:"Прогноз виконання",forecastHint:"Введи норму, кількість виробів і відпрацьований час.",forecastDone:"Зміна вже завершена за вказаним часом.",forecastOnTrack:"За поточним темпом план буде виконано.",forecastBelow:"За поточним темпом плану може не вистачити."
  },
  cs:{
   eyebrow:"VÝPOČET PRODUKTIVITY",title:"KES Norma",subtitle:"Rychlý výpočet plnění normy.",
@@ -155,7 +172,8 @@ const translations = {
   empty:"Zatím nejsou uloženy žádné směny.",made:"Vyrobeno",plan:"plán",hours:"h",
   confirmDelete:"Smazat celou historii směn? Tuto akci nelze vrátit.",
   emptyExport:"Historie je zatím prázdná.",date:"Datum",rate:"Norma za hodinu",qty:"Vyrobeno",shiftHours:"Hodiny",percent:"Procento",
-  ratePlaceholder:"Například 100",madePlaceholder:"Například 820",units:"ks"
+  ratePlaceholder:"Například 100",madePlaceholder:"Například 820",units:"ks",
+   forecastTitle:"Prognóza konce směny",forecastDesc:"Zadej, kolik hodin už máš odpracováno, a odhadni tempo i výsledek na konci směny.",elapsedLabel:"Odpracované hodiny",paceLabel:"Aktuální tempo",forecastLabel:"Odhad na konec směny",neededLabel:"Potřebný výkon za hodinu",forecastPercentLabel:"Odhad plnění",forecastHint:"Zadej normu, počet kusů a odpracovaný čas.",forecastDone:"Podle zadaného času už směna skončila.",forecastOnTrack:"Při současném tempu bude plán splněn.",forecastBelow:"Při současném tempu může plán chybět."
  },
  pl:{
   eyebrow:"OBLICZANIE WYDAJNOŚCI",title:"KES Norma",subtitle:"Szybkie obliczanie realizacji normy.",
@@ -171,7 +189,8 @@ const translations = {
   empty:"Brak zapisanych zmian.",made:"Wyprodukowano",plan:"plan",hours:"godz.",
   confirmDelete:"Usunąć całą historię zmian? Tej operacji nie można cofnąć.",
   emptyExport:"Historia jest pusta.",date:"Data",rate:"Norma na godzinę",qty:"Wyprodukowano",shiftHours:"Godziny",percent:"Procent",
-  ratePlaceholder:"Na przykład 100",madePlaceholder:"Na przykład 820",units:"szt."
+  ratePlaceholder:"Na przykład 100",madePlaceholder:"Na przykład 820",units:"szt.",
+   forecastTitle:"Prognoza końca zmiany",forecastDesc:"Wpisz, ile godzin już przepracowano, aby oszacować tempo i wynik na koniec zmiany.",elapsedLabel:"Przepracowane godziny",paceLabel:"Aktualne tempo",forecastLabel:"Prognoza na koniec zmiany",neededLabel:"Wymagana liczba na godzinę",forecastPercentLabel:"Prognozowana realizacja",forecastHint:"Wpisz normę, liczbę sztuk i przepracowany czas.",forecastDone:"Według podanego czasu zmiana już się zakończyła.",forecastOnTrack:"Przy obecnym tempie plan zostanie wykonany.",forecastBelow:"Przy obecnym tempie może zabraknąć do planu."
  }
 };
 let lang = localStorage.getItem("normaLanguage") || "uk";
@@ -219,11 +238,23 @@ function calc(){
  $("bar").style.width=Math.min(pct,100)+"%";
  box.className="result "+(pct>=100?"good":pct>=80?"mid":"low");
  $("message").textContent=pct>=100?t("complete"):t("short")+" "+fmt(remaining)+" "+t("units")+".";
+ const elapsedRaw=number("elapsed");
+ const elapsedValid=Number.isFinite(elapsedRaw)&&elapsedRaw>=0&&elapsedRaw<=hours;
+ if(!elapsedValid){$("pace").textContent="—";$("forecast").textContent="—";$("needed").textContent="—";$("forecastPercent").textContent="—%";$("forecastMessage").textContent=t("forecastHint");}
+ else if(elapsedRaw===0){$("pace").textContent="—";$("forecast").textContent="—";$("needed").textContent="—";$("forecastPercent").textContent="—%";$("forecastMessage").textContent=t("forecastHint");}
+ else {
+  const pace=made/elapsedRaw, forecast=pace*hours, forecastPct=forecast/target*100, remainingHours=Math.max(0,hours-elapsedRaw), needed=remainingHours>0?Math.max(0,target-made)/remainingHours:NaN;
+  $("pace").textContent=fmt(pace)+" "+t("units")+"/"+t("hours");
+  $("forecast").textContent=fmt(forecast)+" "+t("units");
+  $("needed").textContent=Number.isFinite(needed)?fmt(needed)+" "+t("units")+"/"+t("hours"):"—";
+  $("forecastPercent").textContent=fmt(forecastPct)+"%";
+  $("forecastMessage").textContent=remainingHours===0?t("forecastDone"):(forecastPct>=100?t("forecastOnTrack"):t("forecastBelow"));
+ }
  return {rate,made,hours,target,pct};
 }
-["rate","made","hours"].forEach(id=>$(id).addEventListener("input",calc));
+["rate","made","hours","elapsed"].forEach(id=>$(id).addEventListener("input",calc));
 $("clear").addEventListener("click",()=>{
- $("rate").value="";$("made").value="";$("hours").value="7.5";calc();$("rate").focus();
+ $("rate").value="";$("made").value="";$("hours").value="7.5";$("elapsed").value="0";calc();$("rate").focus();
 });
 
 function getHistory(){
