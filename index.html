@@ -89,7 +89,6 @@ footer{text-align:center;color:#71829a;font-size:11px;line-height:1.6;margin-top
       <a href="#forecastPanel" data-i18n="menuForecast">Прогноз зміни</a>
       <a href="#piecesPanel" data-i18n="menuPieces">Деталі за час</a>
       <a href="#historyPanel" data-i18n="menuHistory">Історія змін</a>
-      <a href="#historyPanel" data-i18n="menuExport">Експорт CSV</a>
     </nav>
   </div>
 
@@ -187,7 +186,7 @@ eyebrow:"РОЗРАХУНОК ПРОДУКТИВНОСТІ",subtitle:"Швидк
 rateLabel:"Норма за годину (шт.)",madeLabel:"Виготовлено за зміну (шт.)",hoursLabel:"Тривалість зміни (години)",
 completion:"Виконання норми",targetLabel:"План на зміну",leftLabel:"Залишилося до 100%",
 enterValues:"Введи норму за годину та кількість виробів.",save:"Зберегти зміну",clear:"Очистити поля",
-menuCalc:"Калькулятор норми",menuForecast:"Прогноз зміни",menuPieces:"Деталі за час",menuHistory:"Історія змін",menuExport:"Експорт CSV",
+menuCalc:"Калькулятор норми",menuForecast:"Прогноз зміни",menuPieces:"Деталі за час",menuHistory:"Історія змін",
 forecastTitle:"Прогноз кінця зміни",forecastDesc:"Вкажи, скільки часу вже відпрацював.",elapsedLabel:"Відпрацьований час",
 paceLabel:"Поточний темп",forecastLabel:"Прогноз на кінець зміни",neededLabel:"Потрібно за годину відтепер",forecastPercentLabel:"Прогноз виконання",
 forecastHint:"Введи норму, кількість деталей і відпрацьований час.",forecastDone:"Зміна вже завершилася за вказаним часом.",
@@ -207,7 +206,7 @@ eyebrow:"VÝPOČET PRODUKTIVITY",subtitle:"Rychlý výpočet plnění normy.",
 rateLabel:"Norma za hodinu (ks)",madeLabel:"Vyrobeno za směnu (ks)",hoursLabel:"Délka směny (hodiny)",
 completion:"Plnění normy",targetLabel:"Plán na směnu",leftLabel:"Zbývá do 100 %",
 enterValues:"Zadej hodinovou normu a počet vyrobených kusů.",save:"Uložit směnu",clear:"Vymazat pole",
-menuCalc:"Kalkulačka normy",menuForecast:"Prognóza směny",menuPieces:"Kusy za čas",menuHistory:"Historie směn",menuExport:"Export CSV",
+menuCalc:"Kalkulačka normy",menuForecast:"Prognóza směny",menuPieces:"Kusy za čas",menuHistory:"Historie směn",
 forecastTitle:"Prognóza konce směny",forecastDesc:"Zadej, kolik času už máš odpracováno.",elapsedLabel:"Odpracovaný čas",
 paceLabel:"Aktuální tempo",forecastLabel:"Prognóza na konec směny",neededLabel:"Potřebný výkon za hodinu",forecastPercentLabel:"Předpokládané plnění",
 forecastHint:"Zadej normu, počet kusů a odpracovaný čas.",forecastDone:"Směna už podle zadaného času skončila.",
@@ -227,7 +226,7 @@ eyebrow:"OBLICZANIE WYDAJNOŚCI",subtitle:"Szybkie obliczanie realizacji normy."
 rateLabel:"Norma na godzinę (szt.)",madeLabel:"Wyprodukowano na zmianie (szt.)",hoursLabel:"Długość zmiany (godziny)",
 completion:"Realizacja normy",targetLabel:"Plan na zmianę",leftLabel:"Pozostało do 100%",
 enterValues:"Wpisz normę godzinową i liczbę wyprodukowanych sztuk.",save:"Zapisz zmianę",clear:"Wyczyść pola",
-menuCalc:"Kalkulator normy",menuForecast:"Prognoza zmiany",menuPieces:"Sztuki w czasie",menuHistory:"Historia zmian",menuExport:"Eksport CSV",
+menuCalc:"Kalkulator normy",menuForecast:"Prognoza zmiany",menuPieces:"Sztuki w czasie",menuHistory:"Historia zmian",
 forecastTitle:"Prognoza końca zmiany",forecastDesc:"Wpisz, ile czasu już przepracowałeś.",elapsedLabel:"Przepracowany czas",
 paceLabel:"Aktualne tempo",forecastLabel:"Prognoza na koniec zmiany",neededLabel:"Wymagana liczba na godzinę",forecastPercentLabel:"Prognozowana realizacja",
 forecastHint:"Wpisz normę, liczbę sztuk i przepracowany czas.",forecastDone:"Zmiana już się zakończyła według podanego czasu.",
@@ -243,12 +242,13 @@ confirmDelete:"Usunąć całą historię zmian?",emptyExport:"Historia jest pust
 ratePlaceholder:"Na przykład 100",madePlaceholder:"Na przykład 820"
 }};
 
-let lang=localStorage.getItem("normaLanguage")||"uk";
+let lang="uk";
+try{lang=localStorage.getItem("normaLanguage")||"uk"}catch(e){}
 if(!translations[lang])lang="uk";
 const t=k=>translations[lang][k]||translations.uk[k];
 const locale=()=>lang==="uk"?"uk-UA":lang==="cs"?"cs-CZ":"pl-PL";
 const fmt=n=>Number(n).toLocaleString(locale(),{maximumFractionDigits:2});
-const number=id=>{const s=$(id).value.trim().replace(",","." );return s===""?NaN:Number(s)};
+const number=id=>{const s=$(id).value.trim().replace(",",".");return s===""?NaN:Number(s)};
 
 function applyLanguage(){
   document.documentElement.lang=lang;
@@ -263,7 +263,7 @@ function applyLanguage(){
 }
 $("language").addEventListener("change",()=>{
   lang=$("language").value;
-  localStorage.setItem("normaLanguage",lang);
+  try{localStorage.setItem("normaLanguage",lang)}catch(e){}
   applyLanguage();
 });
 
@@ -392,12 +392,8 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu()});
 document.querySelectorAll(".drawer a").forEach(a=>{
   a.addEventListener("click",()=>{
     closeMenu();
-    if(a.getAttribute("href")==="#historyPanel"&&a.dataset.i18n==="menuExport"){
-      setTimeout(()=>$("export").click(),100);
-    }else{
-      const target=$(a.getAttribute("href").slice(1));
-      if(target)setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"start"}),50);
-    }
+    const target=$(a.getAttribute("href").slice(1));
+    if(target)setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"start"}),50);
   });
 });
 
